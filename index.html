@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ORA — персональный AI-ассистент для осознанного развития. Работает на уровне смысла: помогает понять, из какого внутреннего слоя вы принимаете решения." />
+  <meta property="og:title" content="ORA — персональный AI-ассистент для трансформации" />
+  <meta property="og:description" content="Ежедневный диалог, который знает вас — не из анкеты, а из экспертного профиля и накопленной истории." />
+  <meta property="og:image" content="/og-image.png" />
+  <title>ORA — Осознанное развитие</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Токены дизайн-системы ORA (4.3) ─────────────────────── */
+    :root {
+      --bg-base:       #0B1520;
+      --bg-canvas:     #0F1E2E;
+      --bg-card:       #162538;
+      --bg-elevated:   #1E3048;
+      --bg-input:      #131F2D;
+
+      --gold-300:      #EAC885;
+      --gold-400:      #D9AE6A;
+      --gold-500:      #C8994E;
+      --gold-600:      #B07D36;
+      --gold-glow:     rgba(200,153,78,0.15);
+
+      --text-primary:  #F0EDE8;
+      --text-secondary:#8FA3B8;
+      --text-muted:    #566A7A;
+      --text-accent:   #C8994E;
+      --text-inverse:  #0F1E2E;
+
+      --border-subtle: rgba(255,255,255,0.05);
+      --border-default:rgba(255,255,255,0.10);
+      --border-active: rgba(200,153,78,0.40);
+
+      --radius-sm:  8px;
+      --radius-md:  12px;
+      --radius-lg:  16px;
+      --radius-xl:  20px;
+      --radius-full:9999px;
+
+      --gradient-path: linear-gradient(180deg, #EAC885 0%, #C8994E 50%, rgba(200,153,78,0) 100%);
+      --gradient-card: radial-gradient(ellipse at top, rgba(200,153,78,0.08) 0%, transparent 60%);
+
+      --font: 'Inter', 'SF Pro Display', 'Segoe UI', system-ui, sans-serif;
+      --transition: 100ms ease-out;
+    }
+
+    /* ── Reset ─────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--bg-canvas);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    img, svg { display: block; }
+    button { cursor: pointer; border: none; background: none; font-family: var(--font); }
+
+    /* ── Layout helpers ────────────────────────────────────────── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .section { padding: 96px 0; }
+    .section--alt { background: var(--bg-base); }
+
+    /* ── Nav ───────────────────────────────────────────────────── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(15,30,46,0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .nav__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .nav__logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav__logo-icon {
+      width: 28px;
+      height: 28px;
+      color: var(--gold-500);
+    }
+    .nav__logo-text {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: -0.5px;
+    }
+    .nav__cta {
+      display: inline-flex;
+      align-items: center;
+      height: 40px;
+      padding: 0 20px;
+      background: var(--gold-500);
+      color: var(--text-inverse);
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: var(--radius-full);
+      box-shadow: 0 0 20px rgba(200,153,78,0.25);
+      transition: background var(--transition), box-shadow var(--transition);
+    }
+    .nav__cta:hover {
+      background: var(--gold-400);
+      box-shadow: 0 0 28px rgba(200,153,78,0.35);
+    }
+
+    /* ── Hero ──────────────────────────────────────────────────── */
+    .hero {
+      padding: 120px 0 96px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 600px;
+      background: radial-gradient(ellipse at center, rgba(200,153,78,0.07) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero__inner {
+      text-align: center;
+      position: relative;
+    }
+    .hero__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 28px;
+      padding: 0 12px;
+      background: var(--gold-glow);
+      border: 1px solid var(--border-active);
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-accent);
+      margin-bottom: 32px;
+    }
+    .hero__badge-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--gold-500);
+      border-radius: 50%;
+    }
+    .hero__title {
+      font-size: clamp(36px, 6vw, 64px);
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--text-primary);
+      max-width: 800px;
+      margin: 0 auto 24px;
+      letter-spacing: -1px;
+    }
+    .hero__title span {
+      color: var(--gold-300);
+    }
+    .hero__sub {
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      max-width: 560px;
+      margin: 0 auto 48px;
+      line-height: 1.7;
+    }
+    .hero__actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 64px;
+    }
+    .btn-store {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      height: 56px;
+      padding: 0 24px;
+      border-radius: var(--radius-lg);
+      font-size: 14px;
+      font-weight: 600;
+      transition: all var(--transition);
+    }
+    .btn-store--primary {
+      background: var(--gold-500);
+      color: var(--text-inverse);
+      box-shadow: 0 0 24px rgba(200,153,78,0.25);
+    }
+    .btn-store--primary:hover {
+      background: var(--gold-400);
+      box-shadow: 0 0 32px rgba(200,153,78,0.35);
+    }
+    .btn-store--secondary {
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1px solid var(--border-default);
+    }
+    .btn-store--secondary:hover {
+      border-color: var(--border-active);
+      color: var(--text-primary);
+    }
+    .btn-store--disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+    .btn-store__label-small {
+      display: block;
+      font-size: 10px;
+      font-weight: 400;
+      opacity: 0.7;
+      line-height: 1;
+      margin-bottom: 2px;
+    }
+    .btn-store__label-main {
+      display: block;
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1;
+    }
+    .hero__divider {
+      width: 40px;
+      height: 2px;
+      background: var(--gradient-path);
+      border-radius: var(--radius-full);
+      margin: 0 auto;
+    }
+
+    /* ── Quote ─────────────────────────────────────────────────── */
+    .quote {
+      padding: 80px 0;
+      background: var(--bg-base);
+    }
+    .quote__inner {
+      max-width: 720px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .quote__mark {
+      font-size: 48px;
+      line-height: 1;
+      color: var(--gold-500);
+      opacity: 0.4;
+      font-family: Georgia, serif;
+      margin-bottom: -8px;
+    }
+    .quote__text {
+      font-size: clamp(20px, 3vw, 26px);
+      font-weight: 300;
+      color: var(--text-primary);
+      line-height: 1.5;
+      letter-spacing: -0.3px;
+    }
+    .quote__author {
+      margin-top: 20px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* ── Problem ───────────────────────────────────────────────── */
+    .problem__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 48px;
+    }
+    .problem__card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 28px;
+    }
+    .problem__icon {
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+    .problem__title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    .problem__text {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ── Section headings ──────────────────────────────────────── */
+    .section-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-accent);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(26px, 4vw, 40px);
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 16px;
+      color: var(--text-secondary);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    /* ── How it works ──────────────────────────────────────────── */
+    .how__steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2px;
+      margin-top: 56px;
+    }
+    .how__step {
+      background: var(--bg-card);
+      background-image: var(--gradient-card);
+      border: 1px solid var(--border-subtle);
+      padding: 32px 28px;
+      position: relative;
+    }
+    .how__step:first-child { border-radius: var(--radius-xl) var(--radius-xl) 0 0; }
+    .how__step:last-child  { border-radius: 0 0 var(--radius-xl) var(--radius-xl); }
+    @media (min-width: 768px) {
+      .how__steps { grid-template-columns: repeat(3, 1fr); }
+      .how__step:first-child { border-radius: var(--radius-xl) 0 0 var(--radius-xl); }
+      .how__step:last-child  { border-radius: 0 var(--radius-xl) var(--radius-xl) 0; }
+    }
+    .how__step-accent {
+      position: absolute;
+      left: 0; top: 24px; bottom: 24px;
+      width: 2px;
+      background: var(--gold-500);
+      border-radius: 0 var(--radius-full) var(--radius-full) 0;
+    }
+    .how__step-num {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-accent);
+      margin-bottom: 12px;
+    }
+    .how__step-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    .how__step-text {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ── Features ──────────────────────────────────────────────── */
+    .features__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+      margin-top: 56px;
+    }
+    .feature {
+      background: var(--bg-elevated);
+      background-image: var(--gradient-card);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-xl);
+      padding: 32px 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .feature__icon {
+      width: 44px;
+      height: 44px;
+      background: var(--gold-glow);
+      border: 1px solid var(--border-active);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      color: var(--gold-500);
+    }
+    .feature__title {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    .feature__text {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* ── For whom ──────────────────────────────────────────────── */
+    .forwhom {
+      background: var(--bg-base);
+    }
+    .forwhom__inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 56px;
+      align-items: center;
+    }
+    @media (min-width: 768px) {
+      .forwhom__inner { grid-template-columns: 1fr 1fr; }
+    }
+    .forwhom__list {
+      list-style: none;
+      margin-top: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .forwhom__item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .forwhom__check {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+      color: var(--gold-500);
+    }
+    .forwhom__visual {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .chat-bubble {
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+    }
+    .chat-bubble--user {
+      flex-direction: row-reverse;
+    }
+    .chat-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-default);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--gold-500);
+    }
+    .chat-text {
+      max-width: 85%;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .chat-text--ora {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      border-bottom-left-radius: 4px;
+    }
+    .chat-text--user {
+      background: var(--bg-card);
+      border: 1px solid var(--border-default);
+      color: var(--text-primary);
+      border-bottom-right-radius: 4px;
+    }
+
+    /* ── Contact ───────────────────────────────────────────────── */
+    .contact__inner {
+      max-width: 560px;
+      margin: 0 auto;
+    }
+    .contact__header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .form__row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 480px) {
+      .form__row { grid-template-columns: 1fr; }
+    }
+    .form__group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .form__label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+    .form__input,
+    .form__textarea {
+      background: var(--bg-input);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      font-size: 15px;
+      font-family: var(--font);
+      color: var(--text-primary);
+      width: 100%;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      outline: none;
+    }
+    .form__input::placeholder,
+    .form__textarea::placeholder {
+      color: var(--text-muted);
+    }
+    .form__input:focus,
+    .form__textarea:focus {
+      border-color: var(--border-active);
+      box-shadow: 0 0 0 3px rgba(200,153,78,0.12);
+    }
+    .form__textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+    .form__submit {
+      height: 52px;
+      background: var(--gold-500);
+      color: var(--text-inverse);
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: var(--radius-lg);
+      box-shadow: 0 0 24px rgba(200,153,78,0.25);
+      transition: background var(--transition), box-shadow var(--transition);
+      width: 100%;
+    }
+    .form__submit:hover {
+      background: var(--gold-400);
+      box-shadow: 0 0 32px rgba(200,153,78,0.35);
+    }
+    .form__submit:active {
+      background: var(--gold-600);
+    }
+    .form__success {
+      display: none;
+      text-align: center;
+      padding: 24px;
+      background: rgba(76,175,125,0.10);
+      border: 1px solid rgba(76,175,125,0.30);
+      border-radius: var(--radius-lg);
+      color: #4CAF7D;
+      font-size: 15px;
+    }
+
+    /* ── Footer ────────────────────────────────────────────────── */
+    .footer {
+      background: var(--bg-base);
+      border-top: 1px solid var(--border-subtle);
+      padding: 40px 0;
+    }
+    .footer__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer__logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .footer__logo-text {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: -0.5px;
+    }
+    .footer__links {
+      display: flex;
+      gap: 24px;
+    }
+    .footer__link {
+      font-size: 13px;
+      color: var(--text-muted);
+      transition: color var(--transition);
+    }
+    .footer__link:hover {
+      color: var(--text-secondary);
+    }
+    .footer__copy {
+      font-size: 12px;
+      color: var(--text-muted);
+      width: 100%;
+      margin-top: 8px;
+    }
+
+    /* ── Reduced motion ────────────────────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.15ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Nav ──────────────────────────────────────────────────── -->
+  <nav class="nav">
+    <div class="container">
+      <div class="nav__inner">
+        <a href="/" class="nav__logo" aria-label="ORA — на главную">
+          <!-- Compass SVG (Lucide, MVP placeholder) -->
+          <svg class="nav__logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+          </svg>
+          <span class="nav__logo-text">ORA</span>
+        </a>
+        <a href="#contact" class="nav__cta">Написать нам</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── Hero ─────────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero__inner">
+        <div class="hero__badge">
+          <span class="hero__badge-dot"></span>
+          Скоро в App Store и Google Play
+        </div>
+
+        <h1 class="hero__title">
+          Персональный AI-ассистент<br />
+          для <span>осознанного роста</span>
+        </h1>
+
+        <p class="hero__sub">
+          ORA работает на уровне смысла — помогает понять, из какого внутреннего слоя вы принимаете решения, и двигаться к следующему уровню в бизнесе и жизни.
+        </p>
+
+        <div class="hero__actions">
+          <!-- App Store — заглушка -->
+          <a href="#contact" class="btn-store btn-store--primary btn-store--disabled" aria-label="Скоро в App Store">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+            </svg>
+            <span>
+              <span class="btn-store__label-small">Скоро в</span>
+              <span class="btn-store__label-main">App Store</span>
+            </span>
+          </a>
+
+          <!-- Google Play — заглушка -->
+          <a href="#contact" class="btn-store btn-store--secondary btn-store--disabled" aria-label="Скоро в Google Play">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M3.18 23.76c.37.2.8.2 1.18 0L15.94 12 4.36.24c-.38-.2-.81-.2-1.18 0C2.46.64 2 1.37 2 2.18v19.64c0 .81.46 1.54 1.18 1.94z" opacity=".4"/>
+              <path d="M20.82 10.26L17.96 8.6 14.7 12l3.26 3.4 2.86-1.66a2.14 2.14 0 000-3.48z"/>
+              <path d="M4.36.24L15.94 12 4.36 23.76l11.58-11.52z" opacity=".6"/>
+            </svg>
+            <span>
+              <span class="btn-store__label-small">Скоро в</span>
+              <span class="btn-store__label-main">Google Play</span>
+            </span>
+          </a>
+        </div>
+
+        <div class="hero__divider"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Quote ─────────────────────────────────────────────────── -->
+  <section class="quote">
+    <div class="container">
+      <div class="quote__inner">
+        <div class="quote__mark">"</div>
+        <p class="quote__text">Со мной всё в порядке. Мой масштаб и деньги держатся на внутренней архитектуре, а не на надрыве.</p>
+        <p class="quote__author">Якорная идея ORA</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Problem ───────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="container">
+      <div class="section-label">Почему привычное не работает</div>
+      <h2 class="section-title">Успех есть — но импульс теряется</h2>
+      <p class="section-sub">Привычные инструменты работают не на том уровне.</p>
+
+      <div class="problem__grid">
+        <div class="problem__card">
+          <div class="problem__icon">📚</div>
+          <div class="problem__title">Книги и курсы</div>
+          <p class="problem__text">Дают знания, но не меняют паттерны. Человек читает правильные вещи и продолжает действовать по-старому.</p>
+        </div>
+        <div class="problem__card">
+          <div class="problem__icon">✅</div>
+          <div class="problem__title">Трекеры привычек</div>
+          <p class="problem__text">Фиксируют действия, но не объясняют, почему они не закрепляются. Мотивация держится неделю.</p>
+        </div>
+        <div class="problem__card">
+          <div class="problem__icon">🗓</div>
+          <div class="problem__title">Коуч или психолог</div>
+          <p class="problem__text">Раз в неделю. Между сессиями человек остаётся один с паттернами, которые ещё не осознал.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── How it works ──────────────────────────────────────────── -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-label">Как работает ORA</div>
+      <h2 class="section-title">Три источника — один персональный ответ</h2>
+      <p class="section-sub">На пересечении трёх источников ORA даёт ответы, которые не могут быть шаблонными по определению.</p>
+
+      <div class="how__steps">
+        <div class="how__step">
+          <div class="how__step-accent"></div>
+          <div class="how__step-num">01 / Концепция</div>
+          <div class="how__step-title">Эйдосы и архетипы Юнга</div>
+          <p class="how__step-text">Общая методологическая база: уровни смысла, 15 архетипов, формулы готовности к переходу. ORA строит диалог на этой основе.</p>
+        </div>
+        <div class="how__step">
+          <div class="how__step-accent"></div>
+          <div class="how__step-num">02 / Профиль</div>
+          <div class="how__step-title">Экспертная характеристика</div>
+          <p class="how__step-text">Консультант составляет ваш личный профиль: архетип, паттерны, сильные стороны, слепые зоны. ORA знает вас до первого слова.</p>
+        </div>
+        <div class="how__step">
+          <div class="how__step-accent"></div>
+          <div class="how__step-num">03 / История</div>
+          <div class="how__step-title">Накопленный контекст</div>
+          <p class="how__step-text">Каждый диалог сохраняется. ORA помнит инсайты, цели, динамику — и использует это в каждом следующем разговоре.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Features ──────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="container">
+      <div class="section-label">Ключевые возможности</div>
+      <h2 class="section-title">Персонализация без компромиссов</h2>
+
+      <div class="features__grid">
+        <div class="feature">
+          <div class="feature__icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+              <path d="M2 17l10 5 10-5"/>
+              <path d="M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <div class="feature__title">Ежедневная глубина</div>
+          <p class="feature__text">Живой консультант доступен раз в неделю. ORA — каждый день. 10–15 минут утром или вечером: не замена специалиста, а пространство между сессиями.</p>
+        </div>
+        <div class="feature">
+          <div class="feature__icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="M21 21l-4.35-4.35"/>
+            </svg>
+          </div>
+          <div class="feature__title">Видит уровень смысла</div>
+          <p class="feature__text">ORA не спрашивает «что ты сделал», а помогает понять «из какого состояния ты действуешь». Работает с причиной, не следствием.</p>
+        </div>
+        <div class="feature">
+          <div class="feature__icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+            </svg>
+          </div>
+          <div class="feature__title">Мост к живой работе</div>
+          <p class="feature__text">ORA готовит вас к сессии с консультантом: фиксирует паттерны, формирует структурированный отчёт, помогает сформулировать запрос.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── For whom ───────────────────────────────────────────────── -->
+  <section class="section section--alt forwhom">
+    <div class="container">
+      <div class="forwhom__inner">
+        <div>
+          <div class="section-label">Для кого</div>
+          <h2 class="section-title">Для людей, которые уже добились результата</h2>
+          <p class="section-sub">И чувствуют: двигаться дальше привычными методами не получается.</p>
+
+          <ul class="forwhom__list">
+            <li class="forwhom__item">
+              <svg class="forwhom__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Уже работали с психологом или коучем — знаете ценность рефлексии
+            </li>
+            <li class="forwhom__item">
+              <svg class="forwhom__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Раздражаетесь от шаблонных советов: хотите понять «почему», а не получить чеклист
+            </li>
+            <li class="forwhom__item">
+              <svg class="forwhom__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Готовы к регулярной практике: 10–15 минут в день
+            </li>
+            <li class="forwhom__item">
+              <svg class="forwhom__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Цените конкретность: инсайт должен конвертироваться в действие
+            </li>
+          </ul>
+        </div>
+
+        <!-- Демо-диалог -->
+        <div class="forwhom__visual">
+          <div style="font-size:11px;font-weight:500;color:var(--text-muted);margin-bottom:4px;">Пример диалога</div>
+
+          <div class="chat-bubble">
+            <div class="chat-avatar">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+            </div>
+            <div class="chat-text chat-text--ora">Что изменилось в последние недели? Не что ты делал — а из какого состояния действовал?</div>
+          </div>
+
+          <div class="chat-bubble chat-bubble--user">
+            <div class="chat-avatar">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <div class="chat-text chat-text--user">Делал много, но как будто на автопилоте. Результаты есть, а ощущения движения нет.</div>
+          </div>
+
+          <div class="chat-bubble">
+            <div class="chat-avatar">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+            </div>
+            <div class="chat-text chat-text--ora">Это важное различие. Автопилот — это когда действие есть, а намерения нет. Откуда, как ты думаешь, это берётся?</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Contact ────────────────────────────────────────────────── -->
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="contact__inner">
+        <div class="contact__header">
+          <div class="section-label">Контакт</div>
+          <h2 class="section-title">Напишите нам</h2>
+          <p class="section-sub" style="margin:0 auto;">Вопросы, партнёрство или ранний доступ — мы читаем всё.</p>
+        </div>
+
+        <form class="form" id="contactForm" action="https://formspree.io/f/REPLACE_ME" method="POST">
+          <div class="form__row">
+            <div class="form__group">
+              <label class="form__label" for="name">Имя</label>
+              <input class="form__input" id="name" name="name" type="text" placeholder="Ваше имя" required autocomplete="name" />
+            </div>
+            <div class="form__group">
+              <label class="form__label" for="email">Email</label>
+              <input class="form__input" id="email" name="email" type="email" placeholder="you@example.com" required autocomplete="email" />
+            </div>
+          </div>
+          <div class="form__group">
+            <label class="form__label" for="message">Сообщение</label>
+            <textarea class="form__textarea" id="message" name="message" placeholder="Расскажите, что вас интересует..." required></textarea>
+          </div>
+          <button class="form__submit" type="submit">Отправить</button>
+        </form>
+
+        <div class="form__success" id="formSuccess">
+          Сообщение отправлено. Ответим в течение рабочего дня.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ─────────────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__logo">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold-500)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+          </svg>
+          <span class="footer__logo-text">ORA</span>
+        </div>
+        <div class="footer__links">
+          <a href="mailto:hello@ora-app.io" class="footer__link">hello@ora-app.io</a>
+          <a href="#contact" class="footer__link">Контакт</a>
+        </div>
+        <div class="footer__copy">© 2025 ORA. Все права защищены.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Обработка формы через Formspree (или нативный submit)
+    const form = document.getElementById('contactForm');
+    const success = document.getElementById('formSuccess');
+
+    form.addEventListener('submit', async function(e) {
+      const action = form.getAttribute('action');
+      if (action.includes('REPLACE_ME')) {
+        // Formspree ещё не настроен — нативная отправка
+        return;
+      }
+      e.preventDefault();
+      const data = new FormData(form);
+      try {
+        const res = await fetch(action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          form.style.display = 'none';
+          success.style.display = 'block';
+        }
+      } catch (_) {}
+    });
+  </script>
+
+</body>
+</html>
