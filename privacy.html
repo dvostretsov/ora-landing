@@ -111,7 +111,7 @@
 
 <nav class="nav">
   <a href="/" class="nav__logo">ORA</a>
-  <a href="/" class="nav__back">← На главную</a>
+  <a href="/" class="nav__back" id="nav-back">← На главную</a>
 </nav>
 
 <div class="container">
@@ -334,9 +334,23 @@
 
   <div class="footer-nav">
     <span>© 2026 ORA. Все права защищены.</span>
-    <a href="/" style="color:var(--text-muted);text-decoration:none;">← На главную</a>
+    <a href="/" style="color:var(--text-muted);text-decoration:none;" id="footer-back">← На главную</a>
   </div>
 
 </div>
+
+<script>
+  (function () {
+    var params = new URLSearchParams(window.location.search);
+    if (params.get('from') === 'app') {
+      var label = '← Вернуться в ORA';
+      var href = 'ora://';
+      var navBack = document.getElementById('nav-back');
+      var footerBack = document.getElementById('footer-back');
+      if (navBack) { navBack.textContent = label; navBack.href = href; }
+      if (footerBack) { footerBack.textContent = label; footerBack.href = href; }
+    }
+  })();
+</script>
 </body>
 </html>
