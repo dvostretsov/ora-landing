@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Политика конфиденциальности — ORA</title>
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-canvas:     #0F1E2E;
+      --bg-card:       #162538;
+      --gold-300:      #EAC885;
+      --gold-400:      #D9AE6A;
+      --text-primary:  #F0EDE8;
+      --text-secondary:#8FA3B8;
+      --text-muted:    #566A7A;
+      --border-subtle: rgba(255,255,255,0.07);
+      --font: 'Inter', 'SF Pro Display', system-ui, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--bg-canvas);
+      color: var(--text-primary);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--gold-300); text-decoration: underline; }
+
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(15,30,46,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 16px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav__logo { font-size: 20px; font-weight: 600; letter-spacing: 0.08em; color: var(--gold-300); text-decoration: none; }
+    .nav__back { font-size: 14px; color: var(--text-secondary); text-decoration: none; }
+    .nav__back:hover { color: var(--text-primary); }
+
+    .container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+
+    .hero {
+      padding: 64px 0 48px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 48px;
+    }
+    .hero__label {
+      display: inline-block;
+      font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--gold-300);
+      background: rgba(200,153,78,0.10);
+      border: 1px solid rgba(200,153,78,0.25);
+      border-radius: 999px; padding: 4px 12px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: clamp(28px,4vw,40px); font-weight: 300; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero__meta { font-size: 14px; color: var(--text-muted); }
+
+    .content h2 {
+      font-size: 20px; font-weight: 500; margin: 48px 0 12px;
+      color: var(--text-primary);
+    }
+    .content h3 {
+      font-size: 16px; font-weight: 500; margin: 28px 0 8px;
+      color: var(--text-primary);
+    }
+    .content p { font-size: 15px; color: var(--text-secondary); margin-bottom: 14px; }
+    .content ul { padding-left: 20px; margin-bottom: 14px; }
+    .content li { font-size: 15px; color: var(--text-secondary); margin-bottom: 6px; }
+
+    .content table {
+      width: 100%; border-collapse: collapse; margin: 20px 0;
+      font-size: 14px;
+    }
+    .content th {
+      text-align: left; padding: 10px 14px;
+      background: var(--bg-card);
+      color: var(--text-primary); font-weight: 500;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .content td {
+      padding: 10px 14px;
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border-subtle);
+      vertical-align: top;
+    }
+    .content tr:last-child td { border-bottom: none; }
+
+    .lang-divider {
+      margin: 64px 0;
+      border: none;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .footer-nav {
+      padding: 40px 0 56px;
+      border-top: 1px solid var(--border-subtle);
+      margin-top: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 14px; color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav__logo">ORA</a>
+  <a href="/" class="nav__back">← На главную</a>
+</nav>
+
+<div class="container">
+
+  <div class="hero">
+    <div class="hero__label">Конфиденциальность</div>
+    <h1>Политика конфиденциальности</h1>
+    <p class="hero__meta">Версия 1.0 · Дата вступления в силу: 30 июня 2026 г.</p>
+  </div>
+
+  <div class="content">
+
+    <h2>1. Кто мы</h2>
+    <p>Оператором персональных данных является:<br>
+    <strong>Дмитрий Вострецов</strong>, autónomo (индивидуальный предприниматель), зарегистрированный в Королевстве Испания.</p>
+    <p>Контактный адрес: <a href="mailto:privacy@ora-app.io">privacy@ora-app.io</a></p>
+
+    <h2>2. На кого распространяется эта политика</h2>
+    <p>Настоящая политика распространяется на всех пользователей мобильного и настольного приложения <strong>ORA</strong>, а также веб-сервисов под доменом ora-app.io.</p>
+
+    <h2>3. Какие данные мы собираем</h2>
+    <table>
+      <thead><tr><th>Категория</th><th>Данные</th><th>Источник</th></tr></thead>
+      <tbody>
+        <tr><td>Идентификационные</td><td>Email, имя (Google OAuth или Apple ID)</td><td>При регистрации</td></tr>
+        <tr><td>Диалоги</td><td>Сообщения чата с ORA</td><td>Ввод пользователя</td></tr>
+        <tr><td>Цели</td><td>Формулировки целей, прогресс, чек-ины</td><td>Ввод пользователя</td></tr>
+        <tr><td>Профиль</td><td>Архетип, текущий и целевой эйдос</td><td>Google Drive (консультант)</td></tr>
+        <tr><td>Метаданные сессий</td><td>Дата/время, тип сессии, количество токенов</td><td>Автоматически</td></tr>
+        <tr><td>Подписка</td><td>Тип доступа, даты начала/окончания</td><td>Администратор вручную</td></tr>
+      </tbody>
+    </table>
+    <p>Мы <strong>не собираем</strong> платёжные данные (MVP использует ручное подтверждение оплаты).</p>
+
+    <h2>4. Как мы обрабатываем данные</h2>
+
+    <h3>4.1 Обработка диалогов</h3>
+    <p>Для того чтобы ORA могла отвечать вам:</p>
+    <ul>
+      <li>Ваши сообщения <strong>передаются в Claude API</strong> (Anthropic, Inc., США) в расшифрованном виде. Это технически необходимо — нейросеть не может работать с зашифрованным текстом.</li>
+      <li><strong>Мы, как оператор, имеем технический доступ</strong> к вашим диалогам через инфраструктуру backend-сервера. Мы не читаем диалоги в рутинном режиме и не используем их в коммерческих целях.</li>
+      <li>Сообщения хранятся в базе данных в <strong>зашифрованном виде</strong> (AES-256-GCM). Прямой доступ к базе данных без ключа шифрования не позволяет прочитать содержимое сообщений.</li>
+    </ul>
+
+    <h3>4.2 Аналитический журнал ORA</h3>
+    <p>После примерно 10 сессий ORA автоматически генерирует аналитический журнал (краткий анализ тем, целей и динамики). Журнал доступен только администратору системы и консультанту. Пользователю журнал напрямую недоступен (функция планируется в будущих версиях).</p>
+
+    <h3>4.3 Экспорт консультанту</h3>
+    <p>По расписанию или вручную администратор формирует PDF-отчёт для консультанта. <strong>Сырые тексты диалогов в отчёт не включаются.</strong></p>
+
+    <h2>5. Правовые основания обработки (GDPR)</h2>
+    <table>
+      <thead><tr><th>Цель</th><th>Основание</th></tr></thead>
+      <tbody>
+        <tr><td>Предоставление сервиса ORA (диалоги, цели)</td><td>Исполнение договора (ст. 6(1)(b) GDPR)</td></tr>
+        <tr><td>Обеспечение безопасности</td><td>Законный интерес (ст. 6(1)(f) GDPR)</td></tr>
+        <tr><td>Аналитика для консультанта</td><td>Законный интерес (ст. 6(1)(f) GDPR)</td></tr>
+        <tr><td>Маркетинговые коммуникации (при наличии)</td><td>Согласие (ст. 6(1)(a) GDPR)</td></tr>
+      </tbody>
+    </table>
+
+    <h2>6. Третьи стороны — получатели данных</h2>
+    <table>
+      <thead><tr><th>Получатель</th><th>Страна</th><th>Что передаётся</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Anthropic, Inc.</strong> (Claude API)</td><td>США</td><td>Тексты сообщений для генерации ответа</td></tr>
+        <tr><td><strong>Supabase, Inc.</strong> (БД и Auth)</td><td>США / EU</td><td>Все данные пользователя (зашифрованные сообщения, профиль, цели)</td></tr>
+        <tr><td><strong>Voyage AI</strong> (эмбеддинги)</td><td>США</td><td>Тексты сообщений для создания векторных представлений</td></tr>
+        <tr><td><strong>Google LLC</strong> (OAuth, Drive)</td><td>США / EU</td><td>Email при входе; файлы профиля из Drive</td></tr>
+        <tr><td><strong>Railway</strong> (хостинг backend)</td><td>США</td><td>Обрабатывается в памяти сервера</td></tr>
+      </tbody>
+    </table>
+    <p>Передача данных в США осуществляется на основании Стандартных договорных положений ЕС (SCC) или механизма EU-U.S. Data Privacy Framework, где применимо.</p>
+
+    <h2>7. Срок хранения данных</h2>
+    <ul>
+      <li><strong>Сообщения и цели:</strong> хранятся на протяжении действия подписки + 30 дней после её истечения.</li>
+      <li><strong>Аккаунт:</strong> при удалении аккаунта все данные удаляются каскадно в течение 30 дней.</li>
+      <li><strong>Аналитические журналы:</strong> хранятся до момента удаления аккаунта.</li>
+      <li><strong>Логи сервера:</strong> автоматически удаляются через 30 дней (политика Railway).</li>
+    </ul>
+
+    <h2>8. Безопасность данных</h2>
+    <ul>
+      <li>Сообщения в базе данных зашифрованы алгоритмом <strong>AES-256-GCM</strong> (аутентифицированное шифрование). Ключ шифрования хранится отдельно от данных.</li>
+      <li>Передача данных между клиентом и сервером — только по <strong>HTTPS/TLS 1.2+</strong>.</li>
+      <li>Аутентификация — через <strong>Supabase Auth</strong> с JWT-токенами.</li>
+      <li>Доступ к Admin Panel ограничен: только зарегистрированные администраторы.</li>
+    </ul>
+
+    <h2>9. Ваши права (GDPR)</h2>
+    <ul>
+      <li><strong>Доступа</strong> — получить копию ваших персональных данных.</li>
+      <li><strong>Исправления</strong> — потребовать уточнения неточных данных.</li>
+      <li><strong>Удаления</strong> («право на забвение») — удалить аккаунт и все данные.</li>
+      <li><strong>Переносимости</strong> — получить данные в машиночитаемом формате.</li>
+      <li><strong>Ограничения обработки</strong> — в случаях, предусмотренных GDPR.</li>
+      <li><strong>Возражения</strong> — против обработки на основании законного интереса.</li>
+      <li><strong>Отзыва согласия</strong> — в любой момент, если обработка основана на согласии.</li>
+    </ul>
+    <p>Для реализации прав обращайтесь: <a href="mailto:privacy@ora-app.io">privacy@ora-app.io</a>. Ответ — в течение 30 дней.</p>
+    <p>Если вы считаете, что ваши права нарушены, вы вправе подать жалобу в надзорный орган по защите данных Испании — <strong>AEPD</strong> (Agencia Española de Protección de Datos): <a href="https://www.aepd.es" target="_blank" rel="noopener">aepd.es</a>.</p>
+
+    <h2>10. Дети</h2>
+    <p>ORA не предназначен для лиц моложе 18 лет. Мы не собираем намеренно данные несовершеннолетних. Если вам стало известно о таком случае, свяжитесь с нами по адресу <a href="mailto:privacy@ora-app.io">privacy@ora-app.io</a>.</p>
+
+    <h2>11. Изменения политики</h2>
+    <p>При существенных изменениях мы уведомим вас через экран согласия в приложении. Незначительные редакционные правки вступают в силу немедленно после публикации.</p>
+
+    <h2>12. Контакт</h2>
+    <p>По всем вопросам конфиденциальности: <a href="mailto:privacy@ora-app.io">privacy@ora-app.io</a></p>
+
+    <hr class="lang-divider" />
+
+    <!-- English Version -->
+    <div class="hero__label" style="display:inline-block;font-size:12px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#EAC885;background:rgba(200,153,78,0.10);border:1px solid rgba(200,153,78,0.25);border-radius:999px;padding:4px 12px;margin-bottom:16px;">English Version</div>
+    <h1 style="font-size:clamp(24px,3vw,36px);font-weight:300;letter-spacing:-0.02em;margin-bottom:12px;">Privacy Policy</h1>
+    <p style="font-size:14px;color:var(--text-muted);margin-bottom:48px;">Version 1.0 · Effective date: June 30, 2026</p>
+
+    <h2>1. Who We Are</h2>
+    <p>The data controller is:<br>
+    <strong>Dmitriy Vostretsov</strong>, autónomo (self-employed individual), registered in the Kingdom of Spain.</p>
+    <p>Contact: <a href="mailto:privacy@ora-app.io">privacy@ora-app.io</a></p>
+
+    <h2>2. Scope</h2>
+    <p>This policy applies to all users of the <strong>ORA</strong> mobile and desktop application and related services at ora-app.io.</p>
+
+    <h2>3. Data We Collect</h2>
+    <table>
+      <thead><tr><th>Category</th><th>Data</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr><td>Identity</td><td>Email, name (Google OAuth or Apple ID)</td><td>At registration</td></tr>
+        <tr><td>Conversations</td><td>Chat messages with ORA</td><td>User input</td></tr>
+        <tr><td>Goals</td><td>Goal descriptions, progress, check-ins</td><td>User input</td></tr>
+        <tr><td>Profile</td><td>Archetype, current/target eidosis</td><td>Google Drive (consultant)</td></tr>
+        <tr><td>Session metadata</td><td>Date/time, session type, token counts</td><td>Automatic</td></tr>
+        <tr><td>Subscription</td><td>Access type, start/expiry dates</td><td>Admin (manual)</td></tr>
+      </tbody>
+    </table>
+    <p>We <strong>do not collect</strong> payment card or bank account details.</p>
+
+    <h2>4. How We Process Data</h2>
+
+    <h3>4.1 Conversations</h3>
+    <ul>
+      <li>Your messages are <strong>transmitted to the Claude API</strong> (Anthropic, Inc., USA) in decrypted form. This is technically necessary — a neural network cannot process encrypted text.</li>
+      <li><strong>As the operator, we have technical access</strong> to your conversations through the backend server infrastructure. We do not read conversations routinely and do not use them for commercial purposes.</li>
+      <li>Messages are stored in the database <strong>encrypted</strong> (AES-256-GCM). Direct database access without the encryption key does not allow reading message content.</li>
+    </ul>
+
+    <h3>4.2 ORA Analytical Journal</h3>
+    <p>After approximately 10 sessions, ORA automatically generates an analytical journal. The journal is accessible only to the system administrator and consultant. Direct user access is planned for a future release.</p>
+
+    <h3>4.3 Consultant Export</h3>
+    <p>The administrator generates a PDF report for the consultant on a schedule or manually. <strong>Raw conversation texts are not included in the report.</strong></p>
+
+    <h2>5. Legal Bases for Processing (GDPR)</h2>
+    <table>
+      <thead><tr><th>Purpose</th><th>Legal basis</th></tr></thead>
+      <tbody>
+        <tr><td>Providing the ORA service (conversations, goals)</td><td>Contract performance (Art. 6(1)(b) GDPR)</td></tr>
+        <tr><td>Security</td><td>Legitimate interests (Art. 6(1)(f) GDPR)</td></tr>
+        <tr><td>Consultant analytics</td><td>Legitimate interests (Art. 6(1)(f) GDPR)</td></tr>
+        <tr><td>Marketing (if any)</td><td>Consent (Art. 6(1)(a) GDPR)</td></tr>
+      </tbody>
+    </table>
+
+    <h2>6. Third-Party Recipients</h2>
+    <table>
+      <thead><tr><th>Recipient</th><th>Country</th><th>Data transferred</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Anthropic, Inc.</strong> (Claude API)</td><td>USA</td><td>Message text for AI response</td></tr>
+        <tr><td><strong>Supabase, Inc.</strong> (DB &amp; Auth)</td><td>USA / EU</td><td>All user data (encrypted messages, profile, goals)</td></tr>
+        <tr><td><strong>Voyage AI</strong> (embeddings)</td><td>USA</td><td>Message text for vector embeddings</td></tr>
+        <tr><td><strong>Google LLC</strong> (OAuth, Drive)</td><td>USA / EU</td><td>Email at sign-in; profile documents from Drive</td></tr>
+        <tr><td><strong>Railway</strong> (backend hosting)</td><td>USA</td><td>Processed in server memory</td></tr>
+      </tbody>
+    </table>
+    <p>Transfers to the USA are made under EU Standard Contractual Clauses (SCCs) or the EU-U.S. Data Privacy Framework where applicable.</p>
+
+    <h2>7. Retention</h2>
+    <ul>
+      <li><strong>Messages and goals:</strong> retained for the duration of the active subscription + 30 days after expiry.</li>
+      <li><strong>Account:</strong> upon account deletion, all data is deleted within 30 days.</li>
+      <li><strong>Analytical journals:</strong> retained until account deletion.</li>
+      <li><strong>Server logs:</strong> automatically deleted after 30 days (Railway policy).</li>
+    </ul>
+
+    <h2>8. Security</h2>
+    <ul>
+      <li>Messages are encrypted with <strong>AES-256-GCM</strong>. The encryption key is stored separately from the data.</li>
+      <li>All client–server communication uses <strong>HTTPS/TLS 1.2+</strong>.</li>
+      <li>Authentication via <strong>Supabase Auth</strong> with JWT tokens.</li>
+      <li>Admin Panel access is restricted to registered administrators.</li>
+    </ul>
+
+    <h2>9. Your Rights (GDPR)</h2>
+    <ul>
+      <li><strong>Access</strong> — receive a copy of your personal data.</li>
+      <li><strong>Rectification</strong> — request correction of inaccurate data.</li>
+      <li><strong>Erasure</strong> — delete your account and all associated data.</li>
+      <li><strong>Data portability</strong> — receive your data in a machine-readable format.</li>
+      <li><strong>Restriction of processing</strong> — in circumstances provided by GDPR.</li>
+      <li><strong>Objection</strong> — to processing based on legitimate interests.</li>
+      <li><strong>Withdrawal of consent</strong> — at any time where processing is based on consent.</li>
+    </ul>
+    <p>To exercise your rights, contact: <a href="mailto:privacy@ora-app.io">privacy@ora-app.io</a>. We will respond within 30 days.</p>
+    <p>You may also lodge a complaint with the Spanish data protection authority: <strong>AEPD</strong>: <a href="https://www.aepd.es" target="_blank" rel="noopener">aepd.es</a>.</p>
+
+    <h2>10. Children</h2>
+    <p>ORA is not intended for persons under 18 years of age. If you become aware of such a case, please contact <a href="mailto:privacy@ora-app.io">privacy@ora-app.io</a>.</p>
+
+    <h2>11. Changes to This Policy</h2>
+    <p>For material changes, we will notify you via the in-app consent screen. Minor editorial changes take effect immediately upon publication.</p>
+
+    <h2>12. Contact</h2>
+    <p>For all privacy enquiries: <a href="mailto:privacy@ora-app.io">privacy@ora-app.io</a></p>
+
+  </div>
+
+  <div class="footer-nav">
+    <span>© 2026 ORA. Все права защищены.</span>
+    <a href="/" style="color:var(--text-muted);text-decoration:none;">← На главную</a>
+  </div>
+
+</div>
+</body>
+</html>
