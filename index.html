@@ -233,21 +233,40 @@
       color: var(--text-primary);
       border: 1px solid var(--gold-500);
       box-shadow: 0 0 16px rgba(200,153,78,0.15);
+      cursor: pointer;
+      font-family: inherit;
     }
     .btn-store--android:hover {
       border-color: var(--gold-400);
       box-shadow: 0 0 24px rgba(200,153,78,0.25);
     }
+    .btn-store--android[aria-expanded="true"] {
+      background: var(--gold-glow);
+    }
     .android-qr {
+      display: grid;
+      grid-template-rows: 0fr;
+      opacity: 0;
+      max-width: fit-content;
+      margin: 0 auto;
+      transition: grid-template-rows .3s ease, opacity .25s ease, margin .3s ease;
+    }
+    .android-qr.is-open {
+      grid-template-rows: 1fr;
+      opacity: 1;
+      margin: 16px auto 0;
+    }
+    .android-qr__inner {
+      overflow: hidden;
       display: flex;
       align-items: center;
       gap: 12px;
-      justify-content: center;
-      max-width: fit-content;
-      margin: 16px auto 0;
-      padding: 10px 16px;
+      padding: 0 16px;
       border: 1px solid var(--border-default);
       border-radius: var(--radius-lg);
+    }
+    .android-qr.is-open .android-qr__inner {
+      padding: 10px 16px;
     }
     .android-qr img {
       display: block;
@@ -256,13 +275,14 @@
       border-radius: 6px;
       background: #fff;
       padding: 4px;
+      flex-shrink: 0;
     }
     .android-qr__text {
       font-size: 12px;
       color: var(--text-secondary);
       line-height: 1.4;
       text-align: left;
-      max-width: 160px;
+      max-width: 200px;
     }
     .android-qr__link {
       display: block;
@@ -837,10 +857,11 @@
             </span>
           </a>
 
-          <!-- Android APK (бета) — прямая установка через EAS. РАБОЧАЯ ссылка, не заглушка.
+          <!-- Android APK (бета) — прямая установка через EAS. РАБОЧАЯ кнопка, не заглушка.
+               По клику разворачивает/сворачивает блок с QR-кодом и ссылкой ниже.
                ⚠️ ОБНОВЛЯТЬ при каждой новой Android-сборке: единственное место для правки —
                константа ANDROID_APK_URL в <script> внизу страницы (id="android-apk-config"). -->
-          <a id="android-apk-link" href="#" target="_blank" rel="noopener" class="btn-store btn-store--android" aria-label="Скачать бета-версию для Android (APK)">
+          <button type="button" id="android-apk-toggle" class="btn-store btn-store--android" aria-expanded="false" aria-controls="android-apk-panel" aria-label="Показать QR-код и ссылку для установки бета-версии Android">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M17.523 15.34l1.876-3.25a.412.412 0 00-.15-.563.41.41 0 00-.563.15l-1.9 3.29a10.65 10.65 0 00-8.573 0l-1.9-3.29a.41.41 0 00-.563-.15.412.412 0 00-.15.563l1.876 3.25C4.703 16.677 2.85 19.5 2.85 22.7h18.3c0-3.2-1.853-6.023-4.627-7.36zM7.5 20.05a1.05 1.05 0 110-2.1 1.05 1.05 0 010 2.1zm9 0a1.05 1.05 0 110-2.1 1.05 1.05 0 010 2.1z"/>
             </svg>
@@ -848,14 +869,17 @@
               <span class="btn-store__label-small">Бета для</span>
               <span class="btn-store__label-main">Android (APK)</span>
             </span>
-          </a>
+          </button>
         </div>
 
-        <div class="android-qr">
-          <img id="android-apk-qr" src="" width="84" height="84" alt="QR-код для установки бета-версии ORA на Android" loading="lazy" />
-          <span class="android-qr__text">
-            Отсканируйте камерой Android, чтобы установить бета-версию напрямую (не через Google Play)
-          </span>
+        <div id="android-apk-panel" class="android-qr">
+          <div class="android-qr__inner">
+            <img id="android-apk-qr" src="" width="84" height="84" alt="QR-код для установки бета-версии ORA на Android" loading="lazy" />
+            <span class="android-qr__text">
+              Отсканируйте камерой Android (или откройте ссылку на самом телефоне), чтобы установить бета-версию напрямую — не через Google Play
+              <a id="android-apk-link" class="android-qr__link" href="#" target="_blank" rel="noopener">Открыть ссылку</a>
+            </span>
+          </div>
         </div>
 
         <div class="hero__divider"></div>
@@ -1156,10 +1180,20 @@
     const ANDROID_APK_URL = "https://expo.dev/accounts/dvostretsov/projects/ora-mobile/builds/748c29f6-6f18-422c-a9aa-7b531004848b";
 
     document.addEventListener('DOMContentLoaded', () => {
+      const toggle = document.getElementById('android-apk-toggle');
+      const panel = document.getElementById('android-apk-panel');
       const link = document.getElementById('android-apk-link');
       const qr = document.getElementById('android-apk-qr');
+
       if (link) link.href = ANDROID_APK_URL;
       if (qr) qr.src = 'https://api.qrserver.com/v1/create-qr-code/?size=168x168&margin=8&data=' + encodeURIComponent(ANDROID_APK_URL);
+
+      if (toggle && panel) {
+        toggle.addEventListener('click', () => {
+          const isOpen = panel.classList.toggle('is-open');
+          toggle.setAttribute('aria-expanded', String(isOpen));
+        });
+      }
     });
   </script>
 
