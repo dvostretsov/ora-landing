@@ -270,8 +270,8 @@
     }
     .android-qr img {
       display: block;
-      width: 84px;
-      height: 84px;
+      width: 168px;
+      height: 168px;
       border-radius: 6px;
       background: #fff;
       padding: 4px;
@@ -874,7 +874,7 @@
 
         <div id="android-apk-panel" class="android-qr">
           <div class="android-qr__inner">
-            <img id="android-apk-qr" src="" width="84" height="84" alt="QR-код для установки бета-версии ORA на Android" loading="lazy" />
+            <img id="android-apk-qr" src="" width="168" height="168" alt="QR-код для установки бета-версии ORA на Android" loading="lazy" />
             <span class="android-qr__text">
               Отсканируйте камерой Android (или откройте ссылку на самом телефоне), чтобы установить бета-версию напрямую — не через Google Play
               <a id="android-apk-link" class="android-qr__link" href="#" target="_blank" rel="noopener">Открыть ссылку</a>
@@ -1186,7 +1186,7 @@
       const qr = document.getElementById('android-apk-qr');
 
       if (link) link.href = ANDROID_APK_URL;
-      if (qr) qr.src = 'https://api.qrserver.com/v1/create-qr-code/?size=168x168&margin=8&data=' + encodeURIComponent(ANDROID_APK_URL);
+      if (qr) qr.src = 'https://api.qrserver.com/v1/create-qr-code/?size=336x336&margin=8&data=' + encodeURIComponent(ANDROID_APK_URL);
 
       if (toggle && panel) {
         toggle.addEventListener('click', () => {
