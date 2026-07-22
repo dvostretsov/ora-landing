@@ -525,6 +525,79 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
+      max-width: 480px;
+      margin: 56px auto 0;
+    }
+    /* ── For whom — два портрета (Light / Premium) ────────────────
+       Переиспользует цветовой язык карточек тарифов (.tariff-card--light/
+       --premium), чтобы связь "это тот же тариф" читалась визуально, а не
+       только по тексту. */
+    .forwhom__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    @media (max-width: 720px) {
+      .forwhom__grid { grid-template-columns: 1fr; }
+    }
+    .forwhom__persona {
+      border-radius: var(--radius-xl);
+      padding: 32px 28px;
+      border: 1px solid var(--border-default);
+    }
+    .forwhom__persona--light {
+      background: linear-gradient(160deg, #333A44 0%, #1B1F26 100%);
+      border-color: rgba(110,143,204,0.35);
+    }
+    .forwhom__persona--premium {
+      background: var(--bg-elevated);
+      background-image: var(--gradient-card);
+      border-color: var(--border-active);
+    }
+    .forwhom__persona-label {
+      display: inline-flex;
+      align-items: center;
+      height: 26px;
+      padding: 0 12px;
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .forwhom__persona--light .forwhom__persona-label {
+      background: rgba(110,143,204,0.14);
+      border: 1px solid rgba(110,143,204,0.4);
+      color: #A9C0E8;
+    }
+    .forwhom__persona--premium .forwhom__persona-label {
+      background: var(--gold-glow);
+      border: 1px solid var(--border-active);
+      color: var(--gold-300);
+    }
+    .forwhom__persona-title {
+      font-size: 19px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .forwhom__persona-sub {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .forwhom__persona .forwhom__list {
+      margin-top: 0;
+      gap: 12px;
+    }
+    .forwhom__persona .forwhom__item {
+      font-size: 14px;
+    }
+    .forwhom__persona--light .forwhom__check {
+      color: #6E8FCC;
     }
     /* ── App Mockup ────────────────────────────────────────────── */
     .app-mockup {
@@ -788,6 +861,198 @@
       margin-top: 8px;
     }
 
+    /* ── Tariffs (Light / Premium) ────────────────────────────── */
+    .tariffs__intro {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 56px;
+    }
+    .tariffs__intro .section-label,
+    .tariffs__intro .section-title,
+    .tariffs__intro .section-sub {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .tariffs__hero {
+      position: relative;
+      max-width: 720px;
+      margin: 0 auto 40px;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      border: 1px solid var(--border-default);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    }
+    .tariffs__hero-img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .tariffs__hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(15,30,46,0) 55%, var(--bg-canvas) 100%);
+      pointer-events: none;
+    }
+    .tariffs__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      align-items: stretch;
+    }
+    @media (max-width: 720px) {
+      .tariffs__grid { grid-template-columns: 1fr; }
+    }
+    .tariff-card {
+      background: var(--bg-elevated);
+      background-image: var(--gradient-card);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-xl);
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+    }
+    /* Light — тёплый графитовый + предрассветный синий (см. LightTierColors
+       в mobile/src/theme/colors.ts): это цвета, которые пользователь реально
+       увидит после установки, поэтому лендинг обязан их предвещать, а не
+       выдавать Light за "золотой" тариф. */
+    .tariff-card--light {
+      background: linear-gradient(160deg, #333A44 0%, #1B1F26 100%);
+      border-color: rgba(110,143,204,0.35);
+      box-shadow: 0 0 32px rgba(110,143,204,0.10);
+    }
+    /* Premium — тёмно-синий + золото: основная палитра сайта, поэтому здесь
+       просто используются токены дизайн-системы как есть. */
+    .tariff-card--premium {
+      border-color: var(--border-active);
+      box-shadow: 0 0 32px rgba(200,153,78,0.08);
+    }
+    .tariff-card__badge {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      height: 26px;
+      padding: 0 12px;
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .tariff-card--light .tariff-card__badge {
+      background: rgba(110,143,204,0.14);
+      border: 1px solid rgba(110,143,204,0.4);
+      color: #A9C0E8;
+    }
+    .tariff-card--premium .tariff-card__badge {
+      background: var(--gold-glow);
+      border: 1px solid var(--border-active);
+      color: var(--gold-300);
+    }
+    .tariff-card__title {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    .tariff-card__desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .tariff-card__list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 32px;
+      flex: 1;
+    }
+    .tariff-card__list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .tariff-card__list svg {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      color: var(--gold-500);
+    }
+    .tariff-card--light .tariff-card__list svg {
+      color: #6E8FCC;
+    }
+    .tariff-card__cta {
+      width: 100%;
+      justify-content: center;
+    }
+    /* Light-CTA перекрашен под предрассветный синий, а не золото — кнопка
+       остаётся "primary" по весу (это точка входа для всех), но по цвету
+       обязана совпадать с тем, что человек увидит в самом приложении. */
+    .tariff-card--light .tariff-card__cta.btn-store--primary {
+      background: #6E8FCC;
+      color: #0F1E2E;
+      box-shadow: 0 0 24px rgba(110,143,204,0.25);
+    }
+    .tariff-card--light .tariff-card__cta.btn-store--primary:hover {
+      background: #86A2D6;
+      box-shadow: 0 0 32px rgba(110,143,204,0.35);
+    }
+
+    /* ── Landing-token flow (2026-07-22): визитёр пришёл по deep-link из
+       мобильного приложения (compliance-фикс App Store Guideline 3.1.1 —
+       см. CLAUDE.md § «Механизм заявки Light → Premium»). Карточка Premium
+       получает яркий пульсирующий акцент вместо статичной тени, а слот
+       #premium-cta-slot заполняется формой заявки через JS. ───────────── */
+    .tariff-card--highlight {
+      animation: tariffPulse 2.2s ease-in-out infinite;
+    }
+    @keyframes tariffPulse {
+      0%, 100% { box-shadow: 0 0 32px rgba(200,153,78,0.10); }
+      50% { box-shadow: 0 0 56px rgba(200,153,78,0.32); }
+    }
+    .premium-request-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 4px;
+    }
+    .premium-request-form select,
+    .premium-request-form input {
+      height: 42px;
+      border-radius: 12px;
+      border: 1px solid var(--border-default);
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+      padding: 0 14px;
+      font-size: 14px;
+      font-family: inherit;
+    }
+    .premium-request-form select:focus,
+    .premium-request-form input:focus {
+      outline: none;
+      border-color: var(--border-active);
+    }
+    .premium-request-note {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--text-secondary);
+      text-align: center;
+      margin-top: 2px;
+    }
+    .premium-request-error {
+      font-size: 13px;
+      color: #E2957A;
+      text-align: center;
+      margin-top: 4px;
+    }
+
     /* ── Reduced motion ────────────────────────────────────────── */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
@@ -832,7 +1097,7 @@
           ORA работает на уровне смысла — помогает понять, из какого внутреннего слоя вы принимаете решения, и двигаться к следующему уровню в бизнесе и жизни.
         </p>
 
-        <div class="hero__actions">
+        <div class="hero__actions" id="hero-download">
           <!-- App Store — заглушка -->
           <a href="#contact" class="btn-store btn-store--primary btn-store--disabled" aria-label="Скоро в App Store">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -999,15 +1264,120 @@
     </div>
   </section>
 
+  <!-- ── Tariffs ───────────────────────────────────────────────── -->
+  <section class="section" id="tariffs">
+    <div class="container">
+      <div class="tariffs__intro">
+        <div class="tariffs__hero">
+          <img src="hero-lifestyle.jpg" alt="Иконка ORA на экране телефона" class="tariffs__hero-img" loading="lazy" />
+        </div>
+        <div class="section-label">Как устроен доступ</div>
+        <h2 class="section-title">Один путь, разная глубина</h2>
+        <p class="section-sub">Light — это тропинка ежедневной практики и первый взгляд на свои архетипы. Premium — это дорога с живым участием человека и работой с целями.</p>
+      </div>
+
+      <div class="tariffs__grid">
+        <div class="tariff-card tariff-card--light">
+          <div class="tariff-card__badge">Начни здесь</div>
+          <h3 class="tariff-card__title">ORA Light</h3>
+          <p class="tariff-card__desc">Ежедневный AI-компаньон для рефлексии и роста.</p>
+          <ul class="tariff-card__list">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Ежедневные диалоги с ORA — 10–15 минут в день
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Архетипическая линза: общее понимание своей тени и своей силы
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              ORA помнит контекст — история диалогов сохраняется и используется дальше
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Гибкие напоминания и тихий режим
+            </li>
+          </ul>
+          <a href="#hero-download" class="btn-store btn-store--primary tariff-card__cta">
+            <span>
+              <span class="btn-store__label-main">Скачать приложение</span>
+            </span>
+          </a>
+        </div>
+
+        <div class="tariff-card tariff-card--premium" id="tariff-card-premium">
+          <div class="tariff-card__badge">Следующий шаг</div>
+          <h3 class="tariff-card__title">ORA Premium</h3>
+          <p class="tariff-card__desc">Всё из Light — плюс живое участие и работа с целями.</p>
+          <ul class="tariff-card__list">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Всё из Light
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Живой консультант — по итогам личного разговора уточняет и калибрует твой профиль архетипа и эйдоса.
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Полноценный трекинг целей — бизнес/доход и личные отношения, с пошаговым планом действий
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              PDF-отчёт с аналитикой прогресса
+            </li>
+          </ul>
+          <div id="premium-cta-slot">
+            <a href="#hero-download" class="btn-store btn-store--secondary tariff-card__cta">
+              <span>
+                <span class="btn-store__label-main">Скачать приложение</span>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ── For whom ───────────────────────────────────────────────── -->
   <section class="section section--alt forwhom">
     <div class="container">
-      <div class="forwhom__inner">
-        <div>
-          <div class="section-label">Для кого</div>
-          <h2 class="section-title">Для людей, которые уже добились результата</h2>
-          <p class="section-sub">И чувствуют: двигаться дальше привычными методами не получается.</p>
+      <div style="text-align:center; max-width:640px; margin:0 auto 48px;">
+        <div class="section-label" style="margin-left:auto; margin-right:auto;">Для кого</div>
+        <h2 class="section-title" style="margin-left:auto; margin-right:auto;">ORA — для двух разных портретов</h2>
+        <p class="section-sub" style="margin-left:auto; margin-right:auto;">У Light и Premium — разные причины, чтобы начать.</p>
+      </div>
 
+      <div class="forwhom__grid">
+        <div class="forwhom__persona forwhom__persona--light">
+          <div class="forwhom__persona-label">Light</div>
+          <h3 class="forwhom__persona-title">Иногда проще начать с телефона</h3>
+          <p class="forwhom__persona-sub">Здесь никто не оценивает и не торопит — можно быть честным с собой в своём темпе.</p>
+          <ul class="forwhom__list">
+            <li class="forwhom__item">
+              <svg class="forwhom__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Хочется разобраться в себе — но пока наедине с собой, без чужого взгляда
+            </li>
+            <li class="forwhom__item">
+              <svg class="forwhom__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Комфортнее начать честный разговор с приложением, чем сразу с незнакомым человеком
+            </li>
+            <li class="forwhom__item">
+              <svg class="forwhom__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Важно, что здесь не осудят и не поторопят с ответом
+            </li>
+            <li class="forwhom__item">
+              <svg class="forwhom__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Ежедневная практика в своём темпе — без обязательств и расписания
+            </li>
+          </ul>
+        </div>
+
+        <div class="forwhom__persona forwhom__persona--premium">
+          <div class="forwhom__persona-label">Premium</div>
+          <h3 class="forwhom__persona-title">Для людей, которые уже добились результата</h3>
+          <p class="forwhom__persona-sub">И чувствуют: двигаться дальше привычными методами не получается.</p>
           <ul class="forwhom__list">
             <li class="forwhom__item">
               <svg class="forwhom__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
@@ -1027,9 +1397,10 @@
             </li>
           </ul>
         </div>
+      </div>
 
-        <!-- Демо-диалог -->
-        <div class="forwhom__visual">
+      <!-- Демо-диалог — общий, показывает сам разговор с ORA -->
+      <div class="forwhom__visual">
           <div class="app-mockup">
             <!-- Phone header -->
             <div class="app-header">
@@ -1065,7 +1436,6 @@
             </div>
           </div>
         </div>
-      </div>
     </div>
   </section>
 
@@ -1222,6 +1592,111 @@
         }
       } catch (_) {}
     });
+  </script>
+
+  <script id="premium-link-flow">
+    // ═══════════════════════════════════════════════════════════════════
+    // Deep-link из мобильного приложения (compliance-фикс App Store
+    // Guideline 3.1.1 — см. CLAUDE.md § «Механизм заявки Light → Premium»).
+    // Приложение больше не апгрейдит на Premium само — вместо этого открывает
+    // эту страницу с ?token=... . Если токен есть, страница сразу
+    // позиционируется на карточку Premium и подставляет туда форму заявки
+    // вместо кнопки "Скачать приложение" (она пользователю уже не нужна —
+    // приложение уже установлено).
+    // ═══════════════════════════════════════════════════════════════════
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const token = params.get('token');
+      if (!token) return;
+
+      const premiumCard = document.getElementById('tariff-card-premium');
+      const ctaSlot = document.getElementById('premium-cta-slot');
+      if (!premiumCard || !ctaSlot) return;
+
+      const API_BASE_URL = 'https://api.ora-app.io';
+
+      premiumCard.classList.add('tariff-card--highlight');
+
+      function renderExpired() {
+        ctaSlot.innerHTML =
+          '<p class="premium-request-note">Ссылка устарела — вернись в приложение и открой её ещё раз.</p>';
+      }
+
+      function renderDuplicate() {
+        ctaSlot.innerHTML =
+          '<p class="premium-request-note">Заявка уже подана — мы уже готовим для тебя следующий шаг.</p>';
+      }
+
+      function renderSuccess() {
+        ctaSlot.innerHTML =
+          '<p class="premium-request-note">✓ Заявка отправлена — команда ORA свяжется с тобой.</p>';
+      }
+
+      function renderForm() {
+        ctaSlot.innerHTML =
+          '<form class="premium-request-form" id="premiumRequestForm">' +
+            '<select id="premiumContactMethod">' +
+              '<option value="email">Email</option>' +
+              '<option value="telegram">Telegram</option>' +
+              '<option value="whatsapp">WhatsApp</option>' +
+            '</select>' +
+            '<input id="premiumContactInfo" type="text" placeholder="Контакт (необязательно для email)" />' +
+            '<button type="submit" class="btn-store btn-store--primary tariff-card__cta">' +
+              '<span><span class="btn-store__label-main" id="premiumSubmitLabel">Оставить заявку</span></span>' +
+            '</button>' +
+            '<p class="premium-request-error" id="premiumRequestError" style="display:none;"></p>' +
+          '</form>';
+
+        const formEl = document.getElementById('premiumRequestForm');
+        const errorEl = document.getElementById('premiumRequestError');
+        const submitLabel = document.getElementById('premiumSubmitLabel');
+
+        formEl.addEventListener('submit', async function (e) {
+          e.preventDefault();
+          errorEl.style.display = 'none';
+          submitLabel.textContent = 'Отправляем…';
+
+          const contactMethod = document.getElementById('premiumContactMethod').value;
+          const contactInfoRaw = document.getElementById('premiumContactInfo').value.trim();
+
+          try {
+            const res = await fetch(API_BASE_URL + '/api/premium-requests/from-landing', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                token: token,
+                contact_method: contactMethod,
+                contact_info: contactInfoRaw || null,
+              }),
+            });
+
+            if (res.status === 201) {
+              renderSuccess();
+              return;
+            }
+            if (res.status === 400) {
+              renderExpired();
+              return;
+            }
+            if (res.status === 409) {
+              renderDuplicate();
+              return;
+            }
+            throw new Error('unexpected status ' + res.status);
+          } catch (err) {
+            submitLabel.textContent = 'Оставить заявку';
+            errorEl.textContent = 'Не удалось отправить заявку. Попробуй ещё раз.';
+            errorEl.style.display = 'block';
+          }
+        });
+      }
+
+      renderForm();
+
+      window.addEventListener('load', function () {
+        premiumCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    })();
   </script>
 
 </body>
