@@ -119,7 +119,7 @@
   <div class="hero">
     <div class="hero__label">Конфиденциальность</div>
     <h1>Политика конфиденциальности</h1>
-    <p class="hero__meta">Версия 1.0 · Дата вступления в силу: 30 июня 2026 г.</p>
+    <p class="hero__meta">Версия 1.1 · Дата вступления в силу: 2 сентября 2026 г.</p>
   </div>
 
   <div class="content">
@@ -141,10 +141,13 @@
         <tr><td>Цели</td><td>Формулировки целей, прогресс, чек-ины</td><td>Ввод пользователя</td></tr>
         <tr><td>Профиль</td><td>Архетип, текущий и целевой эйдос</td><td>Google Drive (консультант)</td></tr>
         <tr><td>Метаданные сессий</td><td>Дата/время, тип сессии, количество токенов</td><td>Автоматически</td></tr>
+        <tr><td>Гипотеза ORA</td><td>Рабочая гипотеза об архетипическом профиле</td><td>Автоматически (анализ диалогов)</td></tr>
         <tr><td>Подписка</td><td>Тип доступа, даты начала/окончания</td><td>Администратор вручную</td></tr>
+        <tr><td>Push-уведомления <em>(добавлено 2026-07-08)</em></td><td>Push-токен устройства (Expo, не привязан к личности напрямую), платформа (iOS/Android), настройки уведомлений, время последнего захода в приложение</td><td>Автоматически (при выдаче разрешения на уведомления)</td></tr>
+        <tr><td>Покупки/подписка <em>(добавлено 2026-09-02)</em></td><td>Статус и история покупки подписки Light через App Store (обрабатывается Apple и RevenueCat), идентификатор пользователя, привязанный к покупке</td><td>Автоматически (при оформлении/продлении подписки Light через App Store)</td></tr>
       </tbody>
     </table>
-    <p>Мы <strong>не собираем</strong> платёжные данные (MVP использует ручное подтверждение оплаты).</p>
+    <p>Мы <strong>не собираем и не храним номера банковских карт или счетов напрямую</strong>. Оплата Premium (MVP) — ручной банковский перевод вне приложения, подтверждается администратором вручную. Оплата Light через App Store/Google Play обрабатывается Apple/Google; мы получаем от RevenueCat только статус и историю подписки, не платёжные реквизиты.</p>
 
     <h2>4. Как мы обрабатываем данные</h2>
 
@@ -154,6 +157,7 @@
       <li>Ваши сообщения <strong>передаются в Claude API</strong> (Anthropic, Inc., США) в расшифрованном виде. Это технически необходимо — нейросеть не может работать с зашифрованным текстом.</li>
       <li><strong>Мы, как оператор, имеем технический доступ</strong> к вашим диалогам через инфраструктуру backend-сервера. Мы не читаем диалоги в рутинном режиме и не используем их в коммерческих целях.</li>
       <li>Сообщения хранятся в базе данных в <strong>зашифрованном виде</strong> (AES-256-GCM). Прямой доступ к базе данных без ключа шифрования не позволяет прочитать содержимое сообщений.</li>
+      <li>ORA сопровождает личную трансформацию и может затрагивать эмоциональное и психологическое состояние — в диалоге вы вправе делиться такой информацией по собственному желанию. Мы не запрашиваем и не структурируем медицинские данные отдельно, но текст сообщений может её содержать. <em>(добавлено 2026-09-02)</em></li>
     </ul>
 
     <h3>4.2 Аналитический журнал ORA</h3>
@@ -182,6 +186,9 @@
         <tr><td><strong>Voyage AI</strong> (эмбеддинги)</td><td>США</td><td>Тексты сообщений для создания векторных представлений</td></tr>
         <tr><td><strong>Google LLC</strong> (OAuth, Drive)</td><td>США / EU</td><td>Email при входе; файлы профиля из Drive</td></tr>
         <tr><td><strong>Railway</strong> (хостинг backend)</td><td>США</td><td>Обрабатывается в памяти сервера</td></tr>
+        <tr><td><strong>Expo (650 Industries, Inc.)</strong> (push-уведомления) <em>(добавлено 2026-07-08)</em></td><td>США</td><td>Push-токен устройства и текст уведомления</td></tr>
+        <tr><td><strong>RevenueCat, Inc.</strong> (обработка подписки Light через App Store/Google Play) <em>(добавлено 2026-09-02)</em></td><td>США</td><td>Идентификатор пользователя, статус и история покупки подписки</td></tr>
+        <tr><td><strong>Apple Inc.</strong> (App Store — обработка платежа за подписку Light) <em>(добавлено 2026-09-02)</em></td><td>США</td><td>Данные о покупке в рамках оплаты через App Store</td></tr>
       </tbody>
     </table>
     <p>Передача данных в США осуществляется на основании Стандартных договорных положений ЕС (SCC) или механизма EU-U.S. Data Privacy Framework, где применимо.</p>
@@ -229,7 +236,7 @@
     <!-- English Version -->
     <div class="hero__label" style="display:inline-block;font-size:12px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#EAC885;background:rgba(200,153,78,0.10);border:1px solid rgba(200,153,78,0.25);border-radius:999px;padding:4px 12px;margin-bottom:16px;">English Version</div>
     <h1 style="font-size:clamp(24px,3vw,36px);font-weight:300;letter-spacing:-0.02em;margin-bottom:12px;">Privacy Policy</h1>
-    <p style="font-size:14px;color:var(--text-muted);margin-bottom:48px;">Version 1.0 · Effective date: June 30, 2026</p>
+    <p style="font-size:14px;color:var(--text-muted);margin-bottom:48px;">Version 1.1 · Effective date: September 2, 2026</p>
 
     <h2>1. Who We Are</h2>
     <p>The data controller is:<br>
@@ -248,10 +255,13 @@
         <tr><td>Goals</td><td>Goal descriptions, progress, check-ins</td><td>User input</td></tr>
         <tr><td>Profile</td><td>Archetype, current/target eidosis</td><td>Google Drive (consultant)</td></tr>
         <tr><td>Session metadata</td><td>Date/time, session type, token counts</td><td>Automatic</td></tr>
+        <tr><td>ORA hypothesis</td><td>Working hypothesis on archetypal profile</td><td>Automatic (dialogue analysis)</td></tr>
         <tr><td>Subscription</td><td>Access type, start/expiry dates</td><td>Admin (manual)</td></tr>
+        <tr><td>Push notifications <em>(added 2026-07-08)</em></td><td>Device push token (Expo, not directly tied to identity), platform (iOS/Android), notification preferences, last app foreground timestamp</td><td>Automatic (upon granting notification permission)</td></tr>
+        <tr><td>Purchases / subscription <em>(added 2026-09-02)</em></td><td>Light subscription purchase status and history via the App Store (processed by Apple and RevenueCat), user identifier linked to the purchase</td><td>Automatic (upon purchasing/renewing a Light subscription via the App Store)</td></tr>
       </tbody>
     </table>
-    <p>We <strong>do not collect</strong> payment card or bank account details.</p>
+    <p>We <strong>do not collect or store bank card or account numbers directly</strong>. Premium payment (MVP) is a manual bank transfer outside the app, confirmed manually by the administrator. Light payment via the App Store/Google Play is processed by Apple/Google; we receive only subscription status and history from RevenueCat, not payment credentials.</p>
 
     <h2>4. How We Process Data</h2>
 
@@ -260,6 +270,7 @@
       <li>Your messages are <strong>transmitted to the Claude API</strong> (Anthropic, Inc., USA) in decrypted form. This is technically necessary — a neural network cannot process encrypted text.</li>
       <li><strong>As the operator, we have technical access</strong> to your conversations through the backend server infrastructure. We do not read conversations routinely and do not use them for commercial purposes.</li>
       <li>Messages are stored in the database <strong>encrypted</strong> (AES-256-GCM). Direct database access without the encryption key does not allow reading message content.</li>
+      <li>ORA supports personal transformation and conversations may touch on your emotional or mental well-being — you may choose to share such information at your own discretion. We do not specifically request or structure health data, but message text may contain it. <em>(added 2026-09-02)</em></li>
     </ul>
 
     <h3>4.2 ORA Analytical Journal</h3>
@@ -288,6 +299,9 @@
         <tr><td><strong>Voyage AI</strong> (embeddings)</td><td>USA</td><td>Message text for vector embeddings</td></tr>
         <tr><td><strong>Google LLC</strong> (OAuth, Drive)</td><td>USA / EU</td><td>Email at sign-in; profile documents from Drive</td></tr>
         <tr><td><strong>Railway</strong> (backend hosting)</td><td>USA</td><td>Processed in server memory</td></tr>
+        <tr><td><strong>Expo (650 Industries, Inc.)</strong> (push notifications) <em>(added 2026-07-08)</em></td><td>USA</td><td>Device push token and notification text</td></tr>
+        <tr><td><strong>RevenueCat, Inc.</strong> (Light subscription processing via App Store/Google Play) <em>(added 2026-09-02)</em></td><td>USA</td><td>User identifier, subscription purchase status and history</td></tr>
+        <tr><td><strong>Apple Inc.</strong> (App Store — Light subscription payment processing) <em>(added 2026-09-02)</em></td><td>USA</td><td>Purchase data related to App Store payment</td></tr>
       </tbody>
     </table>
     <p>Transfers to the USA are made under EU Standard Contractual Clauses (SCCs) or the EU-U.S. Data Privacy Framework where applicable.</p>
