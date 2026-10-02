@@ -1076,6 +1076,82 @@
       margin-top: 4px;
     }
 
+    /* ── EN-only: app language note + Notify me ───────────────── */
+    html:not([lang="en"]) [data-lang-only="en"] { display: none !important; }
+    .notify {
+      max-width: 520px;
+      margin: 4px auto 24px;
+      padding: 18px 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-lg);
+      text-align: left;
+      scroll-margin-top: 88px;
+    }
+    .notify__title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    .notify__title svg { flex-shrink: 0; color: var(--gold-500); }
+    .notify__text {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      margin-bottom: 12px;
+    }
+    .notify__form { display: flex; gap: 8px; }
+    .notify__input {
+      flex: 1;
+      min-width: 0;
+      height: 44px;
+      padding: 0 14px;
+      background: var(--bg-input);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-family: var(--font);
+      color: var(--text-primary);
+      outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+    .notify__input::placeholder { color: var(--text-muted); }
+    .notify__input:focus { border-color: var(--border-active); box-shadow: 0 0 0 3px rgba(200,153,78,0.12); }
+    .notify__btn {
+      height: 44px;
+      padding: 0 18px;
+      background: var(--gold-500);
+      color: var(--text-inverse);
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: var(--radius-md);
+      white-space: nowrap;
+      transition: background var(--transition);
+    }
+    .notify__btn:hover { background: var(--gold-400); }
+    .notify__btn:disabled { opacity: 0.6; cursor: default; }
+    .notify__msg { font-size: 13px; margin-top: 10px; display: none; }
+    .notify__msg--ok { color: #4CAF7D; }
+    .notify__msg--err { color: #E2957A; }
+    .notify__small { font-size: 11px; color: var(--text-muted); margin-top: 8px; }
+    .notify__small a { color: var(--text-secondary); text-decoration: underline; }
+    @media (max-width: 420px) {
+      .notify__form { flex-direction: column; }
+      .notify__input { flex: none; width: 100%; }
+      .notify__btn { width: 100%; }
+    }
+    .tariffs__lang-note {
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 24px;
+    }
+    .tariffs__lang-note a { color: var(--gold-300); text-decoration: underline; }
+
     /* ── Language switch (RU / EN) ─────────────────────────────── */
     html.lang-pending body { visibility: hidden; }
     .nav__right { display: flex; align-items: center; gap: 12px; }
@@ -1206,6 +1282,27 @@
               <a data-i18n="apk_link" id="android-apk-link" class="android-qr__link" href="#" target="_blank" rel="noopener">Открыть ссылку</a>
             </span>
           </div>
+        </div>
+
+        <!-- EN-only: приложение пока только на русском — честная пометка + подписка на английскую версию.
+             Убрать/переписать, когда выйдет английская локализация приложения (см. 8.1_Localization_EN_Plan.md). -->
+        <div class="notify" id="notify" data-lang-only="en">
+          <div class="notify__title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            The app speaks Russian for now
+          </div>
+          <p class="notify__text">ORA's interface and conversations are currently in Russian only. An English version is in the works. Leave your email and we'll let you know the day it's ready.</p>
+          <form class="notify__form" id="notifyForm" action="https://formspree.io/f/xbdvlyja" method="POST">
+            <input type="hidden" name="_subject" value="ORA — notify me when English is ready" />
+            <input type="hidden" name="type" value="notify_en" />
+            <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+            <label for="notifyEmail" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Email</label>
+            <input class="notify__input" id="notifyEmail" name="email" type="email" placeholder="you@example.com" required autocomplete="email" />
+            <button class="notify__btn" type="submit" id="notifyBtn">Notify me</button>
+          </form>
+          <p class="notify__msg notify__msg--ok" id="notifyOk">✓ You're on the list. We'll email you once, when English is ready.</p>
+          <p class="notify__msg notify__msg--err" id="notifyErr">Something went wrong. Please try again or write to hello@ora-app.io.</p>
+          <p class="notify__small">One email, no newsletter. See our <a href="/privacy.html?lang=en#en">privacy policy</a>.</p>
         </div>
 
         <div class="hero__divider"></div>
@@ -1398,6 +1495,7 @@
           </div>
         </div>
       </div>
+      <p class="tariffs__lang-note" data-lang-only="en">Both plans are currently available in Russian only. <a href="#notify">Get notified about English</a></p>
     </div>
   </section>
 
@@ -1654,6 +1752,32 @@
         }
       } catch (_) {}
     });
+  </script>
+
+  <script id="notify-flow">
+    (function () {
+      var f = document.getElementById('notifyForm');
+      if (!f) return;
+      var btn = document.getElementById('notifyBtn');
+      var ok = document.getElementById('notifyOk');
+      var err = document.getElementById('notifyErr');
+      f.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        err.style.display = 'none';
+        btn.disabled = true;
+        btn.textContent = 'Sending…';
+        try {
+          var res = await fetch(f.action, { method: 'POST', body: new FormData(f), headers: { 'Accept': 'application/json' } });
+          if (!res.ok) throw new Error('status ' + res.status);
+          f.style.display = 'none';
+          ok.style.display = 'block';
+        } catch (_) {
+          btn.disabled = false;
+          btn.textContent = 'Notify me';
+          err.style.display = 'block';
+        }
+      });
+    })();
   </script>
 
   <script id="i18n">
