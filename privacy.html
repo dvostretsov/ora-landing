@@ -234,7 +234,7 @@
     <hr class="lang-divider" />
 
     <!-- English Version -->
-    <div class="hero__label" style="display:inline-block;font-size:12px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#EAC885;background:rgba(200,153,78,0.10);border:1px solid rgba(200,153,78,0.25);border-radius:999px;padding:4px 12px;margin-bottom:16px;">English Version</div>
+    <div id="en" class="hero__label" style="scroll-margin-top:80px;display:inline-block;font-size:12px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#EAC885;background:rgba(200,153,78,0.10);border:1px solid rgba(200,153,78,0.25);border-radius:999px;padding:4px 12px;margin-bottom:16px;">English Version</div>
     <h1 style="font-size:clamp(24px,3vw,36px);font-weight:300;letter-spacing:-0.02em;margin-bottom:12px;">Privacy Policy</h1>
     <p style="font-size:14px;color:var(--text-muted);margin-bottom:48px;">Version 1.1 · Effective date: September 2, 2026</p>
 
@@ -356,14 +356,17 @@
 <script>
   (function () {
     var params = new URLSearchParams(window.location.search);
+    var en = params.get('lang') === 'en';
+    var label = en ? '← Back to home' : '← На главную';
+    var href = en ? '/?lang=en' : '/';
     if (params.get('from') === 'app') {
-      var label = '← Вернуться в ORA';
-      var href = 'ora://';
-      var navBack = document.getElementById('nav-back');
-      var footerBack = document.getElementById('footer-back');
-      if (navBack) { navBack.textContent = label; navBack.href = href; }
-      if (footerBack) { footerBack.textContent = label; footerBack.href = href; }
+      label = en ? '← Back to ORA' : '← Вернуться в ORA';
+      href = 'ora://';
     }
+    var navBack = document.getElementById('nav-back');
+    var footerBack = document.getElementById('footer-back');
+    if (navBack) { navBack.textContent = label; navBack.href = href; }
+    if (footerBack) { footerBack.textContent = label; footerBack.href = href; }
   })();
 </script>
 </body>
