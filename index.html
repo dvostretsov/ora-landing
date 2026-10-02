@@ -1076,6 +1076,55 @@
       margin-top: 4px;
     }
 
+    /* ── Partners & investors (EN only) ───────────────────────── */
+    .partners { border-bottom: 1px solid var(--border-subtle); }
+    .partners__head { text-align: center; max-width: 640px; margin: 0 auto 48px; }
+    .partners__head .section-label,
+    .partners__head .section-title,
+    .partners__head .section-sub { margin-left: auto; margin-right: auto; }
+    .partners__facts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .partners__fact {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+    }
+    .partners__fact-k {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-accent);
+      margin-bottom: 8px;
+    }
+    .partners__fact-t { font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+    .partners__fact-x { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+    .partners__form-wrap {
+      max-width: 640px;
+      margin: 0 auto;
+      background: var(--bg-elevated);
+      background-image: var(--gradient-card);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-xl);
+      padding: 32px 28px;
+    }
+    .partners__form-title { font-size: 17px; font-weight: 600; margin-bottom: 4px; }
+    .partners__form-sub { font-size: 14px; color: var(--text-secondary); margin-bottom: 20px; }
+    .form__select {
+      appearance: none;
+      -webkit-appearance: none;
+      background: var(--bg-input) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238FA3B8' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") no-repeat right 14px center;
+      padding-right: 36px;
+    }
+    .partners__msg { display: none; font-size: 14px; margin-top: 12px; text-align: center; }
+    .partners__msg--ok { color: #4CAF7D; }
+    .partners__msg--err { color: #E2957A; }
+
     /* ── EN-only: app language note + Notify me ───────────────── */
     html:not([lang="en"]) [data-lang-only="en"] { display: none !important; }
     .notify {
@@ -1645,6 +1694,80 @@
     </div>
   </section>
 
+  <!-- ── Partners & investors (EN only) ───────────────────────────
+       Показывается только в английской версии (решение 2026-10-02).
+       Цена Premium сознательно не публикуется («by application»). -->
+  <section class="section partners" id="partners" data-lang-only="en">
+    <div class="container">
+      <div class="partners__head">
+        <div class="section-label">Partners &amp; investors</div>
+        <h2 class="section-title">Where ORA is today</h2>
+        <p class="section-sub">A short snapshot for anyone thinking about working with us.</p>
+      </div>
+
+      <div class="partners__facts">
+        <div class="partners__fact">
+          <div class="partners__fact-k">Stage</div>
+          <div class="partners__fact-t">Live on the App Store</div>
+          <p class="partners__fact-x">Launched in October 2026 as ORA ARTHA. Android is in open beta; the English version is in development.</p>
+        </div>
+        <div class="partners__fact">
+          <div class="partners__fact-k">Model</div>
+          <div class="partners__fact-t">Two-tier subscription</div>
+          <p class="partners__fact-x">Light, the daily AI companion: €14.99/month or €129/year through the App Store. Premium, by application: adds a human consultant and structured goal work.</p>
+        </div>
+        <div class="partners__fact">
+          <div class="partners__fact-k">Open to</div>
+          <div class="partners__fact-t">The right conversations</div>
+          <p class="partners__fact-x">Therapy and coaching practices, distribution and content partners, and investors who care about mental wellbeing done responsibly.</p>
+        </div>
+      </div>
+
+      <div class="partners__form-wrap">
+        <div class="partners__form-title">Start a conversation</div>
+        <p class="partners__form-sub">Tell us a little about yourself. The founder reads and answers every message.</p>
+        <form class="form" id="partnersForm" action="https://formspree.io/f/xbdvlyja" method="POST">
+          <input type="hidden" name="_subject" value="ORA — partner / investor inquiry" />
+          <input type="hidden" name="type" value="partner" />
+          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+          <div class="form__row">
+            <div class="form__group">
+              <label class="form__label" for="pName">Name</label>
+              <input class="form__input" id="pName" name="name" type="text" placeholder="Your name" required autocomplete="name" />
+            </div>
+            <div class="form__group">
+              <label class="form__label" for="pEmail">Email</label>
+              <input class="form__input" id="pEmail" name="email" type="email" placeholder="you@company.com" required autocomplete="email" />
+            </div>
+          </div>
+          <div class="form__row">
+            <div class="form__group">
+              <label class="form__label" for="pCompany">Company or organisation</label>
+              <input class="form__input" id="pCompany" name="company" type="text" placeholder="Optional" autocomplete="organization" />
+            </div>
+            <div class="form__group">
+              <label class="form__label" for="pInterest">I'm interested in</label>
+              <select class="form__input form__select" id="pInterest" name="interest" required>
+                <option value="investment">Investing</option>
+                <option value="practice">Referring clients (practice / clinic)</option>
+                <option value="partnership">A partnership</option>
+                <option value="press">Press</option>
+                <option value="other">Something else</option>
+              </select>
+            </div>
+          </div>
+          <div class="form__group">
+            <label class="form__label" for="pMessage">Message</label>
+            <textarea class="form__textarea" id="pMessage" name="message" placeholder="A few lines about what you have in mind (optional)"></textarea>
+          </div>
+          <button class="form__submit" type="submit" id="partnersBtn">Send</button>
+        </form>
+        <p class="partners__msg partners__msg--ok" id="partnersOk">✓ Thank you. We'll reply personally within a few days.</p>
+        <p class="partners__msg partners__msg--err" id="partnersErr">Something went wrong. Please try again or email hello@ora-app.io.</p>
+      </div>
+    </div>
+  </section>
+
   <!-- ── Contact ────────────────────────────────────────────────── -->
   <section class="section" id="contact">
     <div class="container">
@@ -1692,6 +1815,7 @@
         <div class="footer__links">
           <a href="mailto:hello@ora-app.io" class="footer__link">hello@ora-app.io</a>
           <a data-i18n="contact_label" href="#contact" class="footer__link">Контакт</a>
+          <a href="#partners" class="footer__link" data-lang-only="en">Partners &amp; investors</a>
           <a href="/privacy.html" class="footer__link" data-i18n="footer_privacy" data-i18n-attr="href:privacy_href">Политика конфиденциальности</a>
         </div>
         <div data-i18n="footer_copy" class="footer__copy">© 2026 ORA. Все права защищены.</div>
@@ -1752,6 +1876,32 @@
         }
       } catch (_) {}
     });
+  </script>
+
+  <script id="partners-flow">
+    (function () {
+      var f = document.getElementById('partnersForm');
+      if (!f) return;
+      var btn = document.getElementById('partnersBtn');
+      var ok = document.getElementById('partnersOk');
+      var err = document.getElementById('partnersErr');
+      f.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        err.style.display = 'none';
+        btn.disabled = true;
+        btn.textContent = 'Sending…';
+        try {
+          var res = await fetch(f.action, { method: 'POST', body: new FormData(f), headers: { 'Accept': 'application/json' } });
+          if (!res.ok) throw new Error('status ' + res.status);
+          f.style.display = 'none';
+          ok.style.display = 'block';
+        } catch (_) {
+          btn.disabled = false;
+          btn.textContent = 'Send';
+          err.style.display = 'block';
+        }
+      });
+    })();
   </script>
 
   <script id="notify-flow">
