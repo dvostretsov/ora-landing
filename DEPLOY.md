@@ -153,7 +153,7 @@ EMAIL_FROM="noreply@ora-app.io"
 
 ## Обслуживание: ссылка на Android APK (обновлять при КАЖДОЙ новой Android-сборке)
 
-С 2026-07-13 рядом с заглушками App Store/Google Play на лендинге есть рабочая кнопка «Бета для Android (APK)» + QR-код — обе ведут на конкретный EAS-билд, а не на «последнюю сборку» динамически. **Ссылка не обновляется сама** — при каждом новом `eas build --profile preview --platform android` (или `production`) нужно вручную обновить `index.html`.
+С 2026-10-02 кнопка App Store на лендинге рабочая — ведёт на https://apps.apple.com/app/id6782858604 (плюс Smart App Banner `apple-itunes-app` в `<head>`); Google Play пока заглушка. С 2026-07-13 рядом есть рабочая кнопка «Бета для Android (APK)» + QR-код — обе ведут на конкретный EAS-билд, а не на «последнюю сборку» динамически. **Ссылка не обновляется сама** — при каждом новом `eas build --profile preview --platform android` (или `production`) нужно вручную обновить `index.html`.
 
 **Единственное место для правки** — `index.html`, `<script id="android-apk-config">`, константа:
 ```js
