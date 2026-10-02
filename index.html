@@ -1201,9 +1201,10 @@
     }
     .tariffs__lang-note a { color: var(--gold-300); text-decoration: underline; }
 
-    /* Словесный знак ORA ARTHA (ARTHA меньше, под ORA) — пропорции viewBox 1140×649 */
-    .nav__wordmark { height: 30px; width: 52.7px; color: var(--text-primary); fill: currentColor; display: block; }
-    .footer__wordmark { height: 26px; width: 45.7px; color: var(--text-primary); fill: currentColor; display: block; }
+    /* Словесный знак ORA ARTHA (ARTHA меньше, под ORA) — пропорции viewBox 1140×649.
+       Высота = видимая часть иконки рядом (рисунок занимает ~90% её квадрата): 32px → 28.8px, 24px → 21.6px. */
+    .nav__wordmark { height: 28.8px; width: 50.6px; color: var(--text-primary); fill: currentColor; display: block; }
+    .footer__wordmark { height: 21.6px; width: 37.9px; color: var(--text-primary); fill: currentColor; display: block; }
 
     /* ── Language switch (RU / EN) ─────────────────────────────── */
     html.lang-pending body { visibility: hidden; }
@@ -1836,7 +1837,7 @@
           <a href="#partners" class="footer__link" data-lang-only="en">Partners &amp; investors</a>
           <a href="/privacy.html" class="footer__link" data-i18n="footer_privacy" data-i18n-attr="href:privacy_href">Политика конфиденциальности</a>
         </div>
-        <div data-i18n="footer_copy" class="footer__copy">© 2026 ORA. Все права защищены.</div>
+        <div data-i18n="footer_copy" class="footer__copy">© 2026 ORA ARTHA. Все права защищены.</div>
       </div>
     </div>
   </footer>
@@ -2066,7 +2067,7 @@
       "form_success": "Message sent. We'll get back to you soon.",
       "footer_privacy": "Privacy Policy",
       "privacy_href": "/privacy.html?lang=en#en",
-      "footer_copy": "© 2026 ORA. All rights reserved.",
+      "footer_copy": "© 2026 ORA ARTHA. All rights reserved.",
       "pr_expired": "This link has expired. Go back to the app and open it again.",
       "pr_duplicate": "You've already applied. We're preparing your next step.",
       "pr_success": "✓ Request sent. The ORA team will be in touch.",
