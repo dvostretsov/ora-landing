@@ -203,3 +203,11 @@ const ANDROID_APK_URL = "https://expo.dev/accounts/dvostretsov/projects/ora-mobi
 [...document.body.querySelectorAll('*')].filter(e=>e.children.length===0&&/[А-Яа-яЁё]/.test(e.textContent)&&e.offsetParent).map(e=>e.textContent.trim())
 ```
 Пустой массив — всё переведено.
+
+---
+
+## Часть 7: Логотип для подписи Gmail (2026-10-04)
+
+- Файл `email/ora-artha-logo.png` (128×128, прозрачный фон, показывается в 64 px) — иконка для подписи Gmail Дмитрия. Подпись грузит его по адресу https://ora-app.io/email/ora-artha-logo.png.
+- **Не удалять и не переименовывать:** во всех уже отправленных письмах картинка подписи пропадёт.
+- Исходник подписи — `ORA/email_signature/gmail_signature.html` (репозиторий ORA-docs), там же инструкция по установке в Gmail.
