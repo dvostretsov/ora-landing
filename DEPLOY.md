@@ -217,5 +217,6 @@ const ANDROID_APK_URL = "https://expo.dev/accounts/dvostretsov/projects/ora-mobi
 ## Часть 8: Индексация в Google (2026-10-08)
 - Search Console (7 октября) сообщил «Страница с переадресацией»: ссылки вели на `/privacy.html`, а Vercel (`cleanUrls: true`) перенаправляет его на `/privacy`. Все ссылки переведены на `/privacy`.
 - Добавлены `robots.txt` и `sitemap.xml` (главная + `/privacy`), а также `<link rel="canonical">` на обеих страницах.
+- **Основной адрес сайта — `https://www.ora-app.io`** (Vercel перенаправляет `ora-app.io` → `www`). В canonical и sitemap — только `www`-адреса, иначе они сами указывают на переадресацию.
 - **Правило:** ссылки внутри сайта — без `.html` (`/privacy`, не `/privacy.html`). Новую страницу добавлять в `sitemap.xml`.
-- Переадресации `http://` → `https://` и `www` → без `www` в отчёте Search Console остаются — это нормально.
+- Переадресации `http://` → `https://` и `ora-app.io` → `www.ora-app.io` в отчёте Search Console остаются — это нормально.
