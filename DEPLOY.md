@@ -211,3 +211,11 @@ const ANDROID_APK_URL = "https://expo.dev/accounts/dvostretsov/projects/ora-mobi
 - Файл `email/ora-artha-logo.png` (128×128, прозрачный фон, показывается в 64 px) — иконка для подписи Gmail Дмитрия. Подпись грузит его по адресу https://ora-app.io/email/ora-artha-logo.png.
 - **Не удалять и не переименовывать:** во всех уже отправленных письмах картинка подписи пропадёт.
 - Исходник подписи — `ORA/email_signature/gmail_signature.html` (репозиторий ORA-docs), там же инструкция по установке в Gmail.
+
+---
+
+## Часть 8: Индексация в Google (2026-10-08)
+- Search Console (7 октября) сообщил «Страница с переадресацией»: ссылки вели на `/privacy.html`, а Vercel (`cleanUrls: true`) перенаправляет его на `/privacy`. Все ссылки переведены на `/privacy`.
+- Добавлены `robots.txt` и `sitemap.xml` (главная + `/privacy`), а также `<link rel="canonical">` на обеих страницах.
+- **Правило:** ссылки внутри сайта — без `.html` (`/privacy`, не `/privacy.html`). Новую страницу добавлять в `sitemap.xml`.
+- Переадресации `http://` → `https://` и `www` → без `www` в отчёте Search Console остаются — это нормально.
