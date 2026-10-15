@@ -151,19 +151,17 @@ EMAIL_FROM="noreply@ora-app.io"
 
 ---
 
-## Обслуживание: ссылка на Android APK (обновлять при КАЖДОЙ новой Android-сборке)
+## Google Play: спрос на Android вместо APK (2026-10-15)
 
-С 2026-10-02 кнопка App Store на лендинге рабочая — ведёт на https://apps.apple.com/app/id6782858604 (плюс Smart App Banner `apple-itunes-app` в `<head>`); Google Play пока заглушка. С 2026-07-13 рядом есть рабочая кнопка «Бета для Android (APK)» + QR-код — обе ведут на конкретный EAS-билд, а не на «последнюю сборку» динамически. **Ссылка не обновляется сама** — при каждом новом `eas build --profile preview --platform android` (или `production`) нужно вручную обновить `index.html`.
+APK-беты на лендинге больше нет (коммит `4b8e0f0`), обновлять ссылку на EAS-сборку не нужно. Кнопка «Скоро в Google Play» (`#gplay-btn`) раскрывает форму «сообщить о выходе Android» (`#android-notify`) и один раз за сессию пишет клик в Supabase `public.landing_events` (event `gplay_click`, метка кампании `ct`, язык; без IP и cookies). Код — `<script id="android-demand">`. Почты из формы приходят в Formspree с `type=notify_android`.
 
-**Единственное место для правки** — `index.html`, `<script id="android-apk-config">`, константа:
-```js
-const ANDROID_APK_URL = "https://expo.dev/accounts/dvostretsov/projects/ora-mobile/builds/<build-id>";
-```
-Взять новую ссылку из вывода `eas build` (строка `Open this link on your Android devices... to install the app:`) или со страницы https://expo.dev/accounts/dvostretsov/projects/ora-mobile/builds — самая свежая сборка сверху. Кнопка и QR-код (генерируется динамически через api.qrserver.com из этой же константы) подтянут новое значение автоматически — больше ничего в файле искать не нужно.
+Считать клики: `select ct, lang, count(*) from landing_events where event='gplay_click' group by 1,2;`
 
-**⚠️ На странице Builds без фильтра вперемешку идут iOS- и Android-сборки, а рядом могут стоять несколько Android-сборок за один день** (например, тестовая до фикса и рабочая после фикса конфигурации). Брать build id «по памяти»/«это была последняя команда, которую я запускал» — ненадёжно, 2026-07-14 так один раз попала ссылка на сломанную сборку. Правильный способ: на https://expo.dev/.../builds выставить фильтр `Platform: Android` (+ `Channel: preview`, если билд для лендинга) — после фильтра верхняя строка гарантированно самая свежая; открыть её и скопировать URL из адресной строки браузера.
+**Когда приложение выйдет в Google Play:** заменить `<button id="gplay-btn">` на ссылку в стор, убрать форму `#android-notify` и скрипт `android-demand`, написать один раз всем из Formspree с `type=notify_android`. В нижней панели (`#store-bar-android`, см. часть 9) кнопку тоже заменить на ссылку.
 
-После правки — закоммитить и запушить `index.html` в `dvostretsov/ora-landing` (main, без pre-push hook), Vercel задеплоит автоматически.
+## Метки кампаний `?s=` (2026-10-15)
+
+Ссылки из соцсетей ведут на `www.ora-app.io/?s=<метка>` (`tg`, `ig`, `fb`, `tg-<канал>`). `<script id="campaign-links">` переносит метку во все ссылки на App Store как `ct=` вместе с provider token `pt=129070480`; установки по меткам — App Store Connect → Аналитика → Источники → Кампании. Таблица меток — в `claude/Marketing_Hub.md` (проект ORA в claude.ai).
 
 ---
 
@@ -188,6 +186,7 @@ const ANDROID_APK_URL = "https://expo.dev/accounts/dvostretsov/projects/ora-mobi
 | Напишите нам / Get in touch | `#contact`, обе версии | стандартная Formspree | — (есть скрытое `lang`) |
 | Notify me | `#notify`, только EN | ORA — notify me when English is ready | `notify_en` |
 | Partners & investors | `#partners`, только EN | ORA — partner / investor inquiry | `partner` |
+| Сообщить о выходе Android | `#android-notify`, обе версии (по кнопке Google Play) | ORA — сообщить о выходе Android | `notify_android` |
 
 В формах «Notify me» и «Partners» есть скрытое поле-ловушка `_gotcha` от ботов.
 
@@ -220,3 +219,23 @@ const ANDROID_APK_URL = "https://expo.dev/accounts/dvostretsov/projects/ora-mobi
 - **Основной адрес сайта — `https://www.ora-app.io`** (Vercel перенаправляет `ora-app.io` → `www`). В canonical и sitemap — только `www`-адреса, иначе они сами указывают на переадресацию.
 - **Правило:** ссылки внутри сайта — без `.html` (`/privacy`, не `/privacy.html`). Новую страницу добавлять в `sitemap.xml`.
 - Переадресации `http://` → `https://` и `ora-app.io` → `www.ora-app.io` в отчёте Search Console остаются — это нормально.
+
+---
+
+## Часть 9: Соцсети и акцент на кнопках сторов (2026-10-15, коммиты `6711170`, `461ed34`)
+
+### Соцсети в подвале
+Строка «Мы в соцсетях» / «Follow ORA» (`.footer__social`, ключ `social_label`) с кнопками и фирменными цветными иконками (SVG прямо в разметке):
+- Telegram — https://t.me/ora_artha
+- Instagram — https://www.instagram.com/ora_artha/
+- Facebook — https://www.facebook.com/profile.php?id=61595192378235
+
+Новую соцсеть добавлять туда же: ссылка с `target="_blank" rel="noopener"`, класс `footer__social-link`, `aria-label` с названием.
+
+### Кнопки сторов
+- **Всегда:** кнопка App Store крупнее (60 px), с золотой обводкой и тенью; на телефоне — во всю ширину.
+- **Переход из соцсетей.** Ранний скрипт в `<head>` ставит класс `html.from-social`, если есть `?s=` / `utm_source`, реферер Instagram / Facebook / Telegram / Threads или встроенный браузер этих приложений (Instagram, FBAN/FBAV, Telegram в user agent). Признак запоминается в `sessionStorage` (`ora_from_social`) до конца визита. Что меняется: иконка в шапке 160 → 88 px (кнопки попадают в первый экран), кнопка App Store три раза пульсирует (`@keyframes store-pulse`). При `prefers-reduced-motion` пульса нет.
+- **Нижняя панель на телефоне** (`#store-bar`, ширина ≤ 720 px, `<script id="store-cta">`). Появляется, когда кнопки в шапке ушли за экран, прячется у подвала. На iPhone — App Store (ссылка получает метку `ct` тем же скриптом `campaign-links`), на Android — «Скоро в Google Play»: прокручивает к шапке и нажимает основную кнопку `#gplay-btn` (тот же счётчик кликов и форма).
+
+### Проверка
+С телефона: `www.ora-app.io/?s=ig` — маленькая иконка, пульс App Store; прокрутить вниз — панель снизу; дойти до подвала — панель прячется. Без метки иконка обычного размера, панель при прокрутке та же.
