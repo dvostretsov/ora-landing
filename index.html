@@ -252,68 +252,10 @@
       cursor: not-allowed;
       pointer-events: none;
     }
-    .btn-store--android {
-      background: transparent;
-      color: var(--text-primary);
-      border: 1px solid var(--gold-500);
-      box-shadow: 0 0 16px rgba(200,153,78,0.15);
-      cursor: pointer;
-      font-family: inherit;
-    }
-    .btn-store--android:hover {
-      border-color: var(--gold-400);
-      box-shadow: 0 0 24px rgba(200,153,78,0.25);
-    }
-    .btn-store--android[aria-expanded="true"] {
-      background: var(--gold-glow);
-    }
-    .android-qr {
-      display: grid;
-      grid-template-rows: 0fr;
-      opacity: 0;
-      max-width: fit-content;
-      margin: 0 auto;
-      transition: grid-template-rows .3s ease, opacity .25s ease, margin .3s ease;
-    }
-    .android-qr.is-open {
-      grid-template-rows: 1fr;
-      opacity: 1;
-      margin: 16px auto 0;
-    }
-    .android-qr__inner {
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 0 16px;
-      border: 1px solid var(--border-default);
-      border-radius: var(--radius-lg);
-    }
-    .android-qr.is-open .android-qr__inner {
-      padding: 10px 16px;
-    }
-    .android-qr img {
-      display: block;
-      width: 168px;
-      height: 168px;
-      border-radius: 6px;
-      background: #fff;
-      padding: 4px;
-      flex-shrink: 0;
-    }
-    .android-qr__text {
-      font-size: 12px;
-      color: var(--text-secondary);
-      line-height: 1.4;
-      text-align: left;
-      max-width: 200px;
-    }
-    .android-qr__link {
-      display: block;
-      margin-top: 4px;
-      color: var(--text-accent);
-      word-break: break-all;
-    }
+    .btn-store--gplay { cursor: pointer; font-family: inherit; }
+    .btn-store--gplay[aria-expanded="true"] { border-color: var(--gold-500); }
+    .android-notify { margin-top: 16px; }
+    .android-notify[hidden] { display: none; }
     .btn-store__label-small {
       display: block;
       font-size: 10px;
@@ -1315,8 +1257,9 @@
             </span>
           </a>
 
-          <!-- Google Play — заглушка -->
-          <a href="#contact" class="btn-store btn-store--secondary btn-store--disabled" aria-label="Скоро в Google Play" data-i18n-attr="aria-label:aria_gplay">
+          <!-- Google Play — приложения в сторе пока нет. Клик пишется в Supabase (public.landing_events, event=gplay_click)
+               и раскрывает форму «сообщить о выходе Android» ниже (id="android-notify"). -->
+          <button type="button" id="gplay-btn" class="btn-store btn-store--secondary btn-store--gplay" aria-expanded="false" aria-controls="android-notify" aria-label="Скоро в Google Play" data-i18n-attr="aria-label:aria_gplay">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M3.18 23.76c.37.2.8.2 1.18 0L15.94 12 4.36.24c-.38-.2-.81-.2-1.18 0C2.46.64 2 1.37 2 2.18v19.64c0 .81.46 1.54 1.18 1.94z" opacity=".4"/>
               <path d="M20.82 10.26L17.96 8.6 14.7 12l3.26 3.4 2.86-1.66a2.14 2.14 0 000-3.48z"/>
@@ -1326,31 +1269,30 @@
               <span data-i18n="btn_gplay_small" class="btn-store__label-small">Скоро в</span>
               <span class="btn-store__label-main">Google Play</span>
             </span>
-          </a>
-
-          <!-- Android APK (бета) — прямая установка через EAS. РАБОЧАЯ кнопка, не заглушка.
-               По клику разворачивает/сворачивает блок с QR-кодом и ссылкой ниже.
-               ⚠️ ОБНОВЛЯТЬ при каждой новой Android-сборке: единственное место для правки —
-               константа ANDROID_APK_URL в <script> внизу страницы (id="android-apk-config"). -->
-          <button type="button" id="android-apk-toggle" class="btn-store btn-store--android" aria-expanded="false" aria-controls="android-apk-panel" aria-label="Показать QR-код и ссылку для установки бета-версии Android" data-i18n-attr="aria-label:aria_apk">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M17.523 15.34l1.876-3.25a.412.412 0 00-.15-.563.41.41 0 00-.563.15l-1.9 3.29a10.65 10.65 0 00-8.573 0l-1.9-3.29a.41.41 0 00-.563-.15.412.412 0 00-.15.563l1.876 3.25C4.703 16.677 2.85 19.5 2.85 22.7h18.3c0-3.2-1.853-6.023-4.627-7.36zM7.5 20.05a1.05 1.05 0 110-2.1 1.05 1.05 0 010 2.1zm9 0a1.05 1.05 0 110-2.1 1.05 1.05 0 010 2.1z"/>
-            </svg>
-            <span>
-              <span data-i18n="btn_apk_small" class="btn-store__label-small">Бета для</span>
-              <span class="btn-store__label-main">Android (APK)</span>
-            </span>
           </button>
+
         </div>
 
-        <div id="android-apk-panel" class="android-qr">
-          <div class="android-qr__inner">
-            <img id="android-apk-qr" src="" width="168" height="168" alt="QR-код для установки бета-версии ORA на Android" data-i18n-attr="alt:alt_apk_qr" loading="lazy" />
-            <span class="android-qr__text">
-              <span data-i18n="apk_text">Отсканируйте камерой Android (или откройте ссылку на самом телефоне), чтобы установить бета-версию напрямую — не через Google Play</span>
-              <a data-i18n="apk_link" id="android-apk-link" class="android-qr__link" href="#" target="_blank" rel="noopener">Открыть ссылку</a>
-            </span>
+
+        <!-- Android: подписка на выход в Google Play (раскрывается по кнопке Google Play) -->
+        <div class="notify android-notify" id="android-notify" hidden>
+          <div class="notify__title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.18 23.76c.37.2.8.2 1.18 0L15.94 12 4.36.24c-.38-.2-.81-.2-1.18 0C2.46.64 2 1.37 2 2.18v19.64c0 .81.46 1.54 1.18 1.94z" opacity=".4"/><path d="M20.82 10.26L17.96 8.6 14.7 12l3.26 3.4 2.86-1.66a2.14 2.14 0 000-3.48z"/><path d="M4.36.24L15.94 12 4.36 23.76l11.58-11.52z" opacity=".6"/></svg>
+            <span data-i18n="an_title">Версия для Android готовится</span>
           </div>
+          <p class="notify__text" data-i18n="an_text">Оставьте почту — напишем один раз, когда ORA появится в Google Play.</p>
+          <form class="notify__form" id="androidForm" action="https://formspree.io/f/xbdvlyja" method="POST">
+            <input type="hidden" name="_subject" value="ORA — сообщить о выходе Android" />
+            <input type="hidden" name="type" value="notify_android" />
+            <input type="hidden" name="lang" id="androidLang" value="ru" />
+            <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+            <label for="androidEmail" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Email</label>
+            <input class="notify__input" id="androidEmail" name="email" type="email" placeholder="you@example.com" required autocomplete="email" />
+            <button class="notify__btn" type="submit" id="androidBtn" data-i18n="an_btn">Сообщить</button>
+          </form>
+          <p class="notify__msg notify__msg--ok" id="androidOk" data-i18n="an_ok">✓ Готово. Напишем, когда выйдет версия для Android.</p>
+          <p class="notify__msg notify__msg--err" id="androidErr" data-i18n="an_err">Не получилось отправить. Попробуйте ещё раз или напишите на hello@ora-app.io.</p>
+          <p class="notify__small"><span data-i18n="an_small">Одно письмо, без рассылки.</span> <a href="/privacy" data-i18n="an_privacy" data-i18n-attr="href:privacy_href">Политика конфиденциальности</a></p>
         </div>
 
         <!-- EN-only: приложение пока только на русском — честная пометка + подписка на английскую версию.
@@ -1729,7 +1671,7 @@
         <div class="partners__fact">
           <div class="partners__fact-k">Stage</div>
           <div class="partners__fact-t">Live on the App Store</div>
-          <p class="partners__fact-x">Launched in October 2026 as ORA ARTHA. Android is in open beta; the English version is in development.</p>
+          <p class="partners__fact-x">Launched in October 2026 as ORA ARTHA. Android and the English version are in development.</p>
         </div>
         <div class="partners__fact">
           <div class="partners__fact-k">Model</div>
@@ -1843,34 +1785,6 @@
     </div>
   </footer>
 
-  <script id="android-apk-config">
-    // ═══════════════════════════════════════════════════════════════════
-    // Android APK (бета) — ЕДИНСТВЕННОЕ место для правки при каждой новой
-    // Android-сборке (`eas build --profile preview --platform android`).
-    // Взять ссылку из вывода CLI: "Open this link on your Android devices
-    // (or scan the QR code) to install the app: https://expo.dev/..."
-    // Меняете только строку ниже — кнопка и QR-код обновятся сами.
-    // ═══════════════════════════════════════════════════════════════════
-    const ANDROID_APK_URL = "https://expo.dev/accounts/dvostretsov/projects/ora-mobile/builds/2c86830e-1c44-4edf-9724-5b72c9d40c7f";
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const toggle = document.getElementById('android-apk-toggle');
-      const panel = document.getElementById('android-apk-panel');
-      const link = document.getElementById('android-apk-link');
-      const qr = document.getElementById('android-apk-qr');
-
-      if (link) link.href = ANDROID_APK_URL;
-      if (qr) qr.src = 'https://api.qrserver.com/v1/create-qr-code/?size=336x336&margin=8&data=' + encodeURIComponent(ANDROID_APK_URL);
-
-      if (toggle && panel) {
-        toggle.addEventListener('click', () => {
-          const isOpen = panel.classList.toggle('is-open');
-          toggle.setAttribute('aria-expanded', String(isOpen));
-        });
-      }
-    });
-  </script>
-
   <script>
     // Обработка формы через Formspree (или нативный submit)
     const form = document.getElementById('contactForm');
@@ -1959,6 +1873,14 @@
     // Английский — адаптация под англоязычного читателя, не дословный перевод.
     // ═══════════════════════════════════════════════════════════════════
     var I18N_EN = {
+      "an_title": "Android version in the works",
+      "an_text": "Leave your email and we'll write once, when ORA lands on Google Play. The app itself is in Russian for now.",
+      "an_btn": "Notify me",
+      "an_ok": "✓ Done. We'll email you when the Android version is out.",
+      "an_err": "Something went wrong. Please try again or write to hello@ora-app.io.",
+      "an_small": "One email, no newsletter.",
+      "an_privacy": "Privacy policy",
+      "an_sending": "Sending…",
       "meta_title": "ORA — an AI companion for conscious growth",
       "meta_desc": "ORA is a personal AI companion for self-reflection and growth. It works at the level of meaning, helping you see where your decisions really come from.",
       "og_title": "ORA — a personal AI companion for inner growth",
@@ -1972,11 +1894,6 @@
       "btn_appstore_small": "Download on the",
       "aria_gplay": "Coming soon to Google Play",
       "btn_gplay_small": "Coming soon to",
-      "aria_apk": "Show the QR code and link for the Android beta",
-      "btn_apk_small": "Beta for",
-      "alt_apk_qr": "QR code to install the ORA beta on Android",
-      "apk_text": "Scan with your Android phone's camera, or open the link on the phone itself, to install the beta directly, outside Google Play.",
-      "apk_link": "Open link",
       "quote_text": "I'm fine as I am. My growth and my income stand on solid inner foundations, not on pushing myself to the limit.",
       "quote_author": "The idea at the heart of ORA",
       "prob_label": "Why the usual tools fall short",
@@ -2078,6 +1995,7 @@
       "pr_error": "Couldn't send your request. Please try again."
 };
     var I18N_RU_DYNAMIC = {
+      "an_sending": "Отправляем…",
       "pr_expired": "Ссылка устарела — вернись в приложение и открой её ещё раз.",
       "pr_duplicate": "Заявка уже подана — мы уже готовим для тебя следующий шаг.",
       "pr_success": "✓ Заявка отправлена — команда ORA свяжется с тобой.",
@@ -2260,6 +2178,87 @@
       window.addEventListener('load', function () {
         premiumCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
       });
+    })();
+  </script>
+
+  <script id="android-demand">
+    // Спрос на Android (2026-10-15): клик по Google Play пишется в Supabase public.landing_events
+    // (только INSERT для anon, без IP и cookies; один раз за сессию), и раскрывается форма подписки.
+    // Считать: select count(*), ct from landing_events where event = 'gplay_click' group by ct;
+    // Почты из формы приходят в Formspree с type=notify_android.
+    (function () {
+      var SB_URL = 'https://nguokzrehrfnjagfmgyy.supabase.co/rest/v1/landing_events';
+      var SB_KEY = 'sb_publishable_f5uR06TS3g0GDhdkthrw3A_nGiSiarw';
+      var btn = document.getElementById('gplay-btn');
+      var panel = document.getElementById('android-notify');
+      if (!btn || !panel) return;
+      function lang() { return document.documentElement.lang === 'en' ? 'en' : 'ru'; }
+      btn.addEventListener('click', function () {
+        var open = panel.hasAttribute('hidden');
+        if (open) panel.removeAttribute('hidden'); else panel.setAttribute('hidden', '');
+        btn.setAttribute('aria-expanded', String(open));
+        var counted = false;
+        try { counted = sessionStorage.getItem('ora_gplay') === '1'; } catch (e) {}
+        if (counted) return;
+        try { sessionStorage.setItem('ora_gplay', '1'); } catch (e) {}
+        var ct = '';
+        try { ct = sessionStorage.getItem('ora_ct') || ''; } catch (e) {}
+        try {
+          fetch(SB_URL, {
+            method: 'POST', keepalive: true,
+            headers: { 'apikey': SB_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+            body: JSON.stringify({ event: 'gplay_click', ct: ct || null, lang: lang() })
+          }).catch(function () {});
+        } catch (e) {}
+      });
+      var f = document.getElementById('androidForm');
+      var sub = document.getElementById('androidBtn');
+      var ok = document.getElementById('androidOk');
+      var err = document.getElementById('androidErr');
+      f.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        err.style.display = 'none';
+        document.getElementById('androidLang').value = lang();
+        var label = sub.textContent;
+        sub.disabled = true;
+        sub.textContent = oraT('an_sending');
+        try {
+          var res = await fetch(f.action, { method: 'POST', body: new FormData(f), headers: { 'Accept': 'application/json' } });
+          if (!res.ok) throw new Error('status ' + res.status);
+          f.style.display = 'none';
+          ok.style.display = 'block';
+        } catch (_) {
+          sub.disabled = false;
+          sub.textContent = label;
+          err.style.display = 'block';
+        }
+      });
+    })();
+  </script>
+
+  <script id="campaign-links">
+    // Метки кампаний (2026-10-15). Ссылка в посте: www.ora-app.io/?s=<метка>, например ?s=tg, ?s=ig, ?s=fb, ?s=tg-<канал> (до 30 символов).
+    // Метка переносится в ссылку на App Store как ct=<метка> → App Store Connect → Аналитика → Источники → Кампании.
+    // ORA_PT — provider token из App Store Connect (Аналитика → Кампании → «Создать ссылку кампании», параметр pt=).
+    (function () {
+      var ORA_PT = '129070480';
+      var APP_ID = '6782858604';
+      try {
+        var q = new URLSearchParams(location.search);
+        var raw = q.get('s') || q.get('utm_source') || '';
+        var ct = raw.toLowerCase().replace(/[^a-z0-9_-]/g, '').slice(0, 30);
+        try {
+          if (ct) sessionStorage.setItem('ora_ct', ct); else ct = sessionStorage.getItem('ora_ct') || '';
+        } catch (e) {}
+        if (!ORA_PT || !ct) return;
+        var url = 'https://apps.apple.com/app/apple-store/id' + APP_ID +
+                  '?pt=' + encodeURIComponent(ORA_PT) + '&ct=' + encodeURIComponent(ct) + '&mt=8';
+        document.querySelectorAll('a[href*="apps.apple.com/app/id' + APP_ID + '"]').forEach(function (a) {
+          a.setAttribute('href', url);
+        });
+        var meta = document.querySelector('meta[name="apple-itunes-app"]');
+        if (meta) meta.setAttribute('content', 'app-id=' + APP_ID + ', affiliate-data=pt=' + ORA_PT + '&ct=' + ct);
+      } catch (e) {}
     })();
   </script>
 
