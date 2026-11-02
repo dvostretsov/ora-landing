@@ -2284,6 +2284,35 @@
     })();
   </script>
 
+  <script id="visit-track">
+    // Визиты лендинга (2026-11-02): одна строка public.landing_events (event=visit) за сессию вкладки.
+    // Метка ct — из ?s= / ?utm_source= (её кладёт скрипт campaign-links в sessionStorage ora_ct). Без IP и cookies.
+    // Считать: select coalesce(ct,'(без метки)') ct, count(*) from landing_events where event='visit' group by 1;
+    (function () {
+      try {
+        if (navigator.webdriver) return;
+        if (document.prerendering) return;
+        var done = false;
+        try { done = sessionStorage.getItem('ora_visit') === '1'; } catch (e) {}
+        if (done) return;
+        try { sessionStorage.setItem('ora_visit', '1'); } catch (e) {}
+        var ct = '';
+        try { ct = sessionStorage.getItem('ora_ct') || ''; } catch (e) {}
+        var ref = '';
+        try { ref = new URL(document.referrer).hostname.replace(/^www\./, '').slice(0, 40); } catch (e) {}
+        if (ref === location.hostname.replace(/^www\./, '')) ref = '';
+        fetch('https://nguokzrehrfnjagfmgyy.supabase.co/rest/v1/landing_events', {
+          method: 'POST', keepalive: true,
+          headers: { 'apikey': 'sb_publishable_f5uR06TS3g0GDhdkthrw3A_nGiSiarw', 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+          body: JSON.stringify({
+            event: 'visit', ct: ct || null, ref: ref || null,
+            lang: document.documentElement.lang === 'en' ? 'en' : 'ru',
+            device: window.innerWidth <= 720 ? 'mobile' : 'desktop'
+          })
+        }).catch(function () {});
+      } catch (e) {}
+    })();
+  </script>
   <script id="android-demand">
     // Спрос на Android (2026-10-15): клик по Google Play пишется в Supabase public.landing_events
     // (только INSERT для anon, без IP и cookies; один раз за сессию), и раскрывается форма подписки.
