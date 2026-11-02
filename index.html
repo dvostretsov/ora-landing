@@ -2286,7 +2286,7 @@
 
   <script id="visit-track">
     // Визиты лендинга (2026-11-02): одна строка public.landing_events (event=visit) за сессию вкладки.
-    // Метка ct — из ?s= / ?utm_source= (её кладёт скрипт campaign-links в sessionStorage ora_ct). Без IP и cookies.
+    // Метка ct — из ?s= / ?utm_source= (читается из URL сам: campaign-links стоит ниже по файлу и ещё не отработал). Без IP и cookies.
     // Считать: select coalesce(ct,'(без метки)') ct, count(*) from landing_events where event='visit' group by 1;
     (function () {
       try {
@@ -2297,7 +2297,11 @@
         if (done) return;
         try { sessionStorage.setItem('ora_visit', '1'); } catch (e) {}
         var ct = '';
-        try { ct = sessionStorage.getItem('ora_ct') || ''; } catch (e) {}
+        try {
+          var q = new URLSearchParams(location.search);
+          ct = (q.get('s') || q.get('utm_source') || '').toLowerCase().replace(/[^a-z0-9_-]/g, '').slice(0, 30);
+          if (!ct) ct = sessionStorage.getItem('ora_ct') || '';
+        } catch (e) {}
         var ref = '';
         try { ref = new URL(document.referrer).hostname.replace(/^www\./, '').slice(0, 40); } catch (e) {}
         if (ref === location.hostname.replace(/^www\./, '')) ref = '';
