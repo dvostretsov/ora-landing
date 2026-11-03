@@ -159,6 +159,17 @@ APK-беты на лендинге больше нет (коммит `4b8e0f0`),
 
 **Когда приложение выйдет в Google Play:** заменить `<button id="gplay-btn">` на ссылку в стор, убрать форму `#android-notify` и скрипт `android-demand`, написать один раз всем из Formspree с `type=notify_android`. В нижней панели (`#store-bar-android`, см. часть 9) кнопку тоже заменить на ссылку.
 
+## Закрытый тест Android: баннер и модалка записи (2026-11-03, коммиты `02e6f09`, `e578a06`)
+
+Пока приложение в закрытом треке Alpha, на лендинге есть запись в тестировщики. Выложено на сайт и проверено Дмитрием на ora-app.io 2026-11-03: форма отправляется, письмо приходит.
+
+- **Баннер** `#tester-bar` над шапкой (не sticky): «Android — Открыт закрытый тест ORA для Android — присоединяйтесь» и кнопка «Стать тестировщиком». Крестик скрывает баннер до конца сессии (`sessionStorage`, ключ `ora_tester_bar_closed`).
+- **Модалка** `#tester-modal`: поле Gmail-адреса и кнопка «Записаться». Открывается из баннера и по плитке Google Play (`#gplay-btn`, а на телефоне и по `#store-bar-android`, который нажимает ту же плитку). Закрывается по крестику, клику на фон и Esc. Открытие — `window.oraOpenTesterModal()`, скрипт `<script id="android-tester-bar">`.
+- **Форма** `#testerForm` уходит в тот же Formspree `xbdvlyja`: тема «ORA — запись в закрытый тест Android», поле `type=android_tester`, скрытые `lang` и `_gotcha`. Тексты RU/EN — ключи `tb_*` в `I18N_EN`.
+- **Счётчик спроса** не изменился: клик по плитке по-прежнему пишет `gplay_click` в `landing_events`. Прежняя форма «сообщить о выходе» (`#android-notify`, `type=notify_android`) осталась в разметке, но плитка её больше не раскрывает.
+- **Что делать с заявкой:** Google не рассылает приглашения сам. Адрес из письма добавить в список «Alpha testers» (Play Console → Тестирование → Закрытое тестирование → Alpha → Тестировщики) и отправить человеку ссылку для присоединения. Нужно 12+ принявших участие, 14 дней подряд.
+- **Когда тест закончится / приложение выйдет в продакшен:** убрать `#tester-bar`, `#tester-modal` и скрипт `android-tester-bar`, затем действовать по пункту «Когда приложение выйдет в Google Play» выше. Письма с `type=android_tester` — повод написать участникам теста отдельно.
+
 ## Метки кампаний `?s=` (2026-10-15)
 
 Ссылки из соцсетей ведут на `www.ora-app.io/?s=<метка>` (`tg`, `ig`, `fb`, `tg-<канал>`). `<script id="campaign-links">` переносит метку во все ссылки на App Store как `ct=` вместе с provider token `pt=129070480`; установки по меткам — App Store Connect → Аналитика → Источники → Кампании. Таблица меток — в `claude/Marketing_Hub.md` (проект ORA в claude.ai).
@@ -186,7 +197,8 @@ APK-беты на лендинге больше нет (коммит `4b8e0f0`),
 | Напишите нам / Get in touch | `#contact`, обе версии | стандартная Formspree | — (есть скрытое `lang`) |
 | Notify me | `#notify`, только EN | ORA — notify me when English is ready | `notify_en` |
 | Partners & investors | `#partners`, только EN | ORA — partner / investor inquiry | `partner` |
-| Сообщить о выходе Android | `#android-notify`, обе версии (по кнопке Google Play) | ORA — сообщить о выходе Android | `notify_android` |
+| Сообщить о выходе Android | `#android-notify`, обе версии (сейчас не показывается: плитка Google Play открывает модалку теста) | ORA — сообщить о выходе Android | `notify_android` |
+| Запись в закрытый тест Android | `#tester-modal`, обе версии (баннер `#tester-bar` и плитка Google Play) | ORA — запись в закрытый тест Android | `android_tester` |
 
 В формах «Notify me» и «Partners» есть скрытое поле-ловушка `_gotcha` от ботов.
 
