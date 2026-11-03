@@ -1139,6 +1139,28 @@
     .tester-bar__panel { max-width: 520px; margin: 0 auto; padding: 0 24px 14px; }
     .tester-bar__panel[hidden] { display: none; }
     .tester-bar__hint { font-size: 12.5px; color: var(--text-secondary); margin-bottom: 10px; text-align: center; }
+    .tester-modal {
+      position: fixed; inset: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px;
+      background: rgba(5,12,20,0.72);
+      backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+    }
+    .tester-modal[hidden] { display: none; }
+    .tester-modal__card {
+      position: relative;
+      width: 100%; max-width: 440px;
+      padding: 28px 24px 22px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-active);
+      border-radius: var(--radius-xl);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+    }
+    .tester-modal__title { font-size: 18px; font-weight: 600; text-align: center; margin-bottom: 8px; padding: 0 20px; }
+    .tester-modal__close { position: absolute; top: 10px; right: 10px; width: 32px; height: 32px; font-size: 22px; line-height: 1; color: var(--text-secondary); }
+    .tester-modal__close:hover { color: var(--text-primary); }
+    .tester-modal .tester-bar__hint { margin-bottom: 14px; }
+    @media (max-width: 480px) { .tester-modal .notify__form { flex-direction: column; } .tester-modal .notify__btn { width: 100%; } }
     @media (max-width: 640px) {
       .tester-bar__inner { padding-right: 44px; justify-content: flex-start; }
       .tester-bar__text { text-align: left; }
@@ -1339,22 +1361,28 @@
   <div class="tester-bar" id="tester-bar">
     <div class="container tester-bar__inner">
       <p class="tester-bar__text"><span class="tester-bar__tag">Android</span><span data-i18n="tb_text">Открыт закрытый тест ORA для Android — присоединяйтесь</span></p>
-      <button type="button" class="tester-bar__btn" id="tester-bar-btn" aria-expanded="false" aria-controls="tester-bar-panel" data-i18n="tb_btn">Стать тестировщиком</button>
+      <button type="button" class="tester-bar__btn" id="tester-bar-btn" aria-haspopup="dialog" data-i18n="tb_btn">Стать тестировщиком</button>
       <button type="button" class="tester-bar__close" id="tester-bar-close" aria-label="Закрыть" data-i18n-attr="aria-label:tb_close">×</button>
     </div>
-    <div class="tester-bar__panel" id="tester-bar-panel" hidden>
+  </div>
+
+  <!-- Модалка записи в закрытый тест Android: открывается из баннера и по плитке Google Play -->
+  <div class="tester-modal" id="tester-modal" hidden>
+    <div class="tester-modal__card" role="dialog" aria-modal="true" aria-labelledby="tester-modal-title">
+      <button type="button" class="tester-modal__close" id="tester-modal-close" aria-label="Закрыть" data-i18n-attr="aria-label:tb_close">×</button>
+      <h3 class="tester-modal__title" id="tester-modal-title" data-i18n="tb_title">Закрытый тест ORA для Android</h3>
       <p class="tester-bar__hint" data-i18n="tb_hint">Укажите адрес Google-аккаунта (Gmail) — добавим вас в тест и пришлём ссылку на установку.</p>
-      <form class="notify__form" id="testerForm" action="https://formspree.io/f/xbdvlyja" method="POST">
-        <input type="hidden" name="_subject" value="ORA — запись в закрытый тест Android" />
-        <input type="hidden" name="type" value="android_tester" />
-        <input type="hidden" name="lang" id="testerLang" value="ru" />
-        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none" />
-        <label for="testerEmail" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Email</label>
-        <input class="notify__input" id="testerEmail" name="email" type="email" placeholder="you@gmail.com" required autocomplete="email" />
-        <button class="notify__btn" type="submit" id="testerBtn" data-i18n="tb_submit">Записаться</button>
-      </form>
-      <p class="notify__msg notify__msg--ok" id="testerOk" data-i18n="tb_ok">✓ Готово. Добавим вас в тест и напишем на эту почту.</p>
-      <p class="notify__msg notify__msg--err" id="testerErr" data-i18n="an_err">Не получилось отправить. Попробуйте ещё раз или напишите на hello@ora-app.io.</p>
+        <form class="notify__form" id="testerForm" action="https://formspree.io/f/xbdvlyja" method="POST">
+          <input type="hidden" name="_subject" value="ORA — запись в закрытый тест Android" />
+          <input type="hidden" name="type" value="android_tester" />
+          <input type="hidden" name="lang" id="testerLang" value="ru" />
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none" />
+          <label for="testerEmail" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Email</label>
+          <input class="notify__input" id="testerEmail" name="email" type="email" placeholder="you@gmail.com" required autocomplete="email" />
+          <button class="notify__btn" type="submit" id="testerBtn" data-i18n="tb_submit">Записаться</button>
+        </form>
+        <p class="notify__msg notify__msg--ok" id="testerOk" data-i18n="tb_ok">✓ Готово. Добавим вас в тест и напишем на эту почту.</p>
+        <p class="notify__msg notify__msg--err" id="testerErr" data-i18n="an_err">Не получилось отправить. Попробуйте ещё раз или напишите на hello@ora-app.io.</p>
     </div>
   </div>
 
@@ -1411,7 +1439,7 @@
 
           <!-- Google Play — приложения в сторе пока нет. Клик пишется в Supabase (public.landing_events, event=gplay_click)
                и раскрывает форму «сообщить о выходе Android» ниже (id="android-notify"). -->
-          <button type="button" id="gplay-btn" class="btn-store btn-store--secondary btn-store--gplay" aria-expanded="false" aria-controls="android-notify" aria-label="Скоро в Google Play" data-i18n-attr="aria-label:aria_gplay">
+          <button type="button" id="gplay-btn" class="btn-store btn-store--secondary btn-store--gplay" aria-haspopup="dialog" aria-label="Скоро в Google Play" data-i18n-attr="aria-label:aria_gplay">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M3.18 23.76c.37.2.8.2 1.18 0L15.94 12 4.36.24c-.38-.2-.81-.2-1.18 0C2.46.64 2 1.37 2 2.18v19.64c0 .81.46 1.54 1.18 1.94z" opacity=".4"/>
               <path d="M20.82 10.26L17.96 8.6 14.7 12l3.26 3.4 2.86-1.66a2.14 2.14 0 000-3.48z"/>
@@ -2069,6 +2097,7 @@
       "tb_text": "The ORA closed test for Android is open — join us",
       "tb_btn": "Become a tester",
       "tb_close": "Close",
+      "tb_title": "ORA closed test for Android",
       "tb_hint": "Enter your Google account email (Gmail) — we'll add you to the test and send the install link.",
       "tb_submit": "Sign up",
       "tb_ok": "✓ Done. We'll add you to the test and email you at this address.",
@@ -2420,9 +2449,7 @@
       if (!btn || !panel) return;
       function lang() { return document.documentElement.lang === 'en' ? 'en' : 'ru'; }
       btn.addEventListener('click', function () {
-        var open = panel.hasAttribute('hidden');
-        if (open) panel.removeAttribute('hidden'); else panel.setAttribute('hidden', '');
-        btn.setAttribute('aria-expanded', String(open));
+        if (window.oraOpenTesterModal) window.oraOpenTesterModal(btn);
         var counted = false;
         try { counted = sessionStorage.getItem('ora_gplay') === '1'; } catch (e) {}
         if (counted) return;
@@ -2468,7 +2495,24 @@
       var bar = document.getElementById('tester-bar');
       if (!bar) return;
       var btn = document.getElementById('tester-bar-btn');
-      var panel = document.getElementById('tester-bar-panel');
+      var modal = document.getElementById('tester-modal');
+      var lastFocus = null;
+      function openModal(from) {
+        lastFocus = from || document.activeElement;
+        modal.hidden = false;
+        document.body.style.overflow = 'hidden';
+        var i = document.getElementById('testerEmail');
+        if (i && i.offsetParent) i.focus();
+      }
+      function closeModal() {
+        modal.hidden = true;
+        document.body.style.overflow = '';
+        if (lastFocus && lastFocus.focus) lastFocus.focus();
+      }
+      window.oraOpenTesterModal = openModal;
+      document.getElementById('tester-modal-close').addEventListener('click', closeModal);
+      modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
       var f = document.getElementById('testerForm');
       var sub = document.getElementById('testerBtn');
       var ok = document.getElementById('testerOk');
@@ -2478,12 +2522,7 @@
         bar.hidden = true;
         try { sessionStorage.setItem('ora_tester_bar_closed', '1'); } catch (e) {}
       });
-      btn.addEventListener('click', function () {
-        var open = panel.hasAttribute('hidden');
-        if (open) { panel.removeAttribute('hidden'); document.getElementById('testerEmail').focus(); }
-        else panel.setAttribute('hidden', '');
-        btn.setAttribute('aria-expanded', String(open));
-      });
+      btn.addEventListener('click', function () { openModal(btn); });
       f.addEventListener('submit', async function (e) {
         e.preventDefault();
         err.style.display = 'none';
