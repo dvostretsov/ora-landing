@@ -1085,6 +1085,65 @@
     .partners__msg--ok { color: #4CAF7D; }
     .partners__msg--err { color: #E2957A; }
 
+    /* ── Баннер: закрытый тест Android (2026-11-03) ───────────── */
+    .tester-bar {
+      background: linear-gradient(90deg, rgba(200,153,78,0.18), rgba(200,153,78,0.08));
+      border-bottom: 1px solid var(--border-active);
+    }
+    .tester-bar[hidden] { display: none; }
+    .tester-bar__inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px 14px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      position: relative;
+    }
+    .tester-bar__text { font-size: 14px; color: var(--text-primary); line-height: 1.45; text-align: center; }
+    .tester-bar__tag {
+      display: inline-block;
+      margin-right: 8px;
+      padding: 1px 8px;
+      border-radius: var(--radius-full);
+      background: var(--gold-glow);
+      border: 1px solid var(--border-active);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-accent);
+    }
+    .tester-bar__btn {
+      height: 34px;
+      padding: 0 16px;
+      border-radius: var(--radius-full);
+      background: var(--text-accent);
+      color: var(--text-inverse);
+      font-size: 13px;
+      font-weight: 600;
+      transition: filter var(--transition);
+    }
+    .tester-bar__btn:hover { filter: brightness(1.1); }
+    .tester-bar__close {
+      width: 32px;
+      height: 32px;
+      font-size: 22px;
+      line-height: 1;
+      color: var(--text-secondary);
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .tester-bar__close:hover { color: var(--text-primary); }
+    .tester-bar__panel { max-width: 520px; margin: 0 auto; padding: 0 24px 14px; }
+    .tester-bar__panel[hidden] { display: none; }
+    .tester-bar__hint { font-size: 12.5px; color: var(--text-secondary); margin-bottom: 10px; text-align: center; }
+    @media (max-width: 640px) {
+      .tester-bar__inner { padding-right: 44px; justify-content: flex-start; }
+      .tester-bar__text { text-align: left; }
+    }
+
     /* ── EN-only: app language note + Notify me ───────────────── */
     html:not([lang="en"]) [data-lang-only="en"] { display: none !important; }
     .notify {
@@ -1273,6 +1332,31 @@
       <path d="M1116.0993199533764 610.4372093193704H1043.1956327399346L1029.2109631801234 648.4938510722991H1012.2459542059262L1070.7064581034974 490.3066052318122H1088.817751467843L1147.0489984873846 648.4938510722991H1130.0839895131874ZM1111.2849255147528 597.1403103936483 1079.6474763466554 510.48121049842507 1048.010027178558 597.1403103936483Z"/>
     </symbol>
   </svg>
+
+  <!-- ── Баннер: закрытый тест Android ────────────────────────────
+       Заявки приходят в Formspree с type=android_tester. Дмитрий добавляет адрес в список «Alpha testers»
+       (Play Console → Закрытое тестирование → Alpha) и отправляет ссылку для присоединения. -->
+  <div class="tester-bar" id="tester-bar">
+    <div class="container tester-bar__inner">
+      <p class="tester-bar__text"><span class="tester-bar__tag">Android</span><span data-i18n="tb_text">Открыт закрытый тест ORA для Android — присоединяйтесь</span></p>
+      <button type="button" class="tester-bar__btn" id="tester-bar-btn" aria-expanded="false" aria-controls="tester-bar-panel" data-i18n="tb_btn">Стать тестировщиком</button>
+      <button type="button" class="tester-bar__close" id="tester-bar-close" aria-label="Закрыть" data-i18n-attr="aria-label:tb_close">×</button>
+    </div>
+    <div class="tester-bar__panel" id="tester-bar-panel" hidden>
+      <p class="tester-bar__hint" data-i18n="tb_hint">Укажите адрес Google-аккаунта (Gmail) — добавим вас в тест и пришлём ссылку на установку.</p>
+      <form class="notify__form" id="testerForm" action="https://formspree.io/f/xbdvlyja" method="POST">
+        <input type="hidden" name="_subject" value="ORA — запись в закрытый тест Android" />
+        <input type="hidden" name="type" value="android_tester" />
+        <input type="hidden" name="lang" id="testerLang" value="ru" />
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none" />
+        <label for="testerEmail" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Email</label>
+        <input class="notify__input" id="testerEmail" name="email" type="email" placeholder="you@gmail.com" required autocomplete="email" />
+        <button class="notify__btn" type="submit" id="testerBtn" data-i18n="tb_submit">Записаться</button>
+      </form>
+      <p class="notify__msg notify__msg--ok" id="testerOk" data-i18n="tb_ok">✓ Готово. Добавим вас в тест и напишем на эту почту.</p>
+      <p class="notify__msg notify__msg--err" id="testerErr" data-i18n="an_err">Не получилось отправить. Попробуйте ещё раз или напишите на hello@ora-app.io.</p>
+    </div>
+  </div>
 
   <!-- ── Nav ──────────────────────────────────────────────────── -->
   <nav class="nav">
@@ -1982,6 +2066,12 @@
       "an_small": "One email, no newsletter.",
       "an_privacy": "Privacy policy",
       "an_sending": "Sending…",
+      "tb_text": "The ORA closed test for Android is open — join us",
+      "tb_btn": "Become a tester",
+      "tb_close": "Close",
+      "tb_hint": "Enter your Google account email (Gmail) — we'll add you to the test and send the install link.",
+      "tb_submit": "Sign up",
+      "tb_ok": "✓ Done. We'll add you to the test and email you at this address.",
       "meta_title": "ORA — an AI companion for conscious growth",
       "meta_desc": "ORA is a personal AI companion for self-reflection and growth. It works at the level of meaning, helping you see where your decisions really come from.",
       "og_title": "ORA — a personal AI companion for inner growth",
@@ -2355,6 +2445,49 @@
         e.preventDefault();
         err.style.display = 'none';
         document.getElementById('androidLang').value = lang();
+        var label = sub.textContent;
+        sub.disabled = true;
+        sub.textContent = oraT('an_sending');
+        try {
+          var res = await fetch(f.action, { method: 'POST', body: new FormData(f), headers: { 'Accept': 'application/json' } });
+          if (!res.ok) throw new Error('status ' + res.status);
+          f.style.display = 'none';
+          ok.style.display = 'block';
+        } catch (_) {
+          sub.disabled = false;
+          sub.textContent = label;
+          err.style.display = 'block';
+        }
+      });
+    })();
+  </script>
+
+  <script id="android-tester-bar">
+    // Баннер закрытого теста Android (2026-11-03): закрытие запоминается на сессию, форма уходит в Formspree.
+    (function () {
+      var bar = document.getElementById('tester-bar');
+      if (!bar) return;
+      var btn = document.getElementById('tester-bar-btn');
+      var panel = document.getElementById('tester-bar-panel');
+      var f = document.getElementById('testerForm');
+      var sub = document.getElementById('testerBtn');
+      var ok = document.getElementById('testerOk');
+      var err = document.getElementById('testerErr');
+      try { if (sessionStorage.getItem('ora_tester_bar_closed') === '1') bar.hidden = true; } catch (e) {}
+      document.getElementById('tester-bar-close').addEventListener('click', function () {
+        bar.hidden = true;
+        try { sessionStorage.setItem('ora_tester_bar_closed', '1'); } catch (e) {}
+      });
+      btn.addEventListener('click', function () {
+        var open = panel.hasAttribute('hidden');
+        if (open) { panel.removeAttribute('hidden'); document.getElementById('testerEmail').focus(); }
+        else panel.setAttribute('hidden', '');
+        btn.setAttribute('aria-expanded', String(open));
+      });
+      f.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        err.style.display = 'none';
+        document.getElementById('testerLang').value = document.documentElement.lang === 'en' ? 'en' : 'ru';
         var label = sub.textContent;
         sub.disabled = true;
         sub.textContent = oraT('an_sending');
